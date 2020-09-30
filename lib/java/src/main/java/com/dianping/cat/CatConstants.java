@@ -10,6 +10,19 @@ public final class CatConstants {
     public static final String SPLIT = ";";
     public static final char BATCH_FLAG = '@';
     public static final String CAT_SYSTEM = "System";
-    
-    private CatConstants() {}
+
+    // 用于支持从环境变量(java启动参数或者application.properties)配置CAT client；
+
+    /**
+     * @author ptang@leqee.com
+     */
+    public static final String CAT_HOSTS = "cat.hosts"; // ,分割的ip组
+    public static final String CAT_HTTP_PORT = "cat.http.port";
+    public static final String CAT_TCP_PORT = "cat.tcp.port";
+    public static final String CAT_APP_ID = "cat.app.id";
+    public static final String CAT_LOG_HOME = "cat.log.home";
+    public static final String CAT_LOG_MAX_DAY = "cat.log.max.day";
+
+    private CatConstants() {
+    }
 }

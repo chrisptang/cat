@@ -50,9 +50,9 @@ RUN set -ex && mvn clean install -DskipTests
 RUN cp cat-home/target/*.war $CATALINA_HOME/webapps/cat.war
 ADD docker/datasources.xml /data/appdatas/cat/datasources.xml
 ADD docker/datasources.sh /datasources.sh
-RUN sed -i "s/port=\"8080\"/port=\"8080\"\ URIEncoding=\"utf-8\"/g" $CATALINA_HOME/conf/server.xml \
+RUN sed -i "s/port=\"30000\"/port=\"30000\"\ URIEncoding=\"utf-8\"/g" $CATALINA_HOME/conf/server.xml \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i '1a\JAVA_OPTS="-Dhost.ip=${SERVER_IP} -Duser.timezone=GMT+8"' /usr/local/tomcat/bin/catalina.sh
 
 
-EXPOSE 8080
+EXPOSE 30000

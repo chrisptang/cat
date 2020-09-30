@@ -24,6 +24,7 @@ import com.dianping.cat.util.Threads;
 import java.io.*;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CatLogger {
@@ -32,8 +33,12 @@ public class CatLogger {
     private String lastPath;
     private boolean devMode;
     private ReentrantLock lock = new ReentrantLock();
-    private static final String DEFAULT_BASE_DIR = "/data/applogs/cat";
+    private static final AtomicReference<String> DEFAULT_BASE_DIR = new AtomicReference<>("/data/applogs/cat");
     private static CatLogger LOGGER = new CatLogger();
+
+    public static void updateLogHome(String newLogHome) {
+        DEFAULT_BASE_DIR.set(newLogHome);
+    }
 
     public static CatLogger getInstance() {
         return LOGGER;
@@ -93,7 +98,7 @@ public class CatLogger {
 
     private File getFilePath(String path) throws IOException {
         File file = new File(path);
-        String baseDir = Properties.forString().fromSystem().fromEnv().getProperty("CAT_HOME", DEFAULT_BASE_DIR);
+        String baseDir = Properties.forString().fromSystem().fromEnv().getProperty("CAT_LOG_HOME", DEFAULT_BASE_DIR.get());
 
         if (baseDir != null) {
             file = new File(baseDir, path);

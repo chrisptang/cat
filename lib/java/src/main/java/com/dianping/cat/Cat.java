@@ -18,32 +18,32 @@
  */
 package com.dianping.cat;
 
+import com.dianping.cat.analyzer.EventAggregator;
+import com.dianping.cat.analyzer.LocalAggregator;
 import com.dianping.cat.analyzer.MetricTagAggregator;
 import com.dianping.cat.analyzer.TransactionAggregator;
 import com.dianping.cat.configuration.ApplicationEnvironment;
 import com.dianping.cat.configuration.ClientConfigProvider;
 import com.dianping.cat.configuration.client.entity.ClientConfig;
+import com.dianping.cat.configuration.client.entity.ClientConfigProperty;
 import com.dianping.cat.configuration.client.entity.Server;
 import com.dianping.cat.configuration.client.transform.DefaultSaxParser;
 import com.dianping.cat.log.CatLogger;
-import com.dianping.cat.message.Trace;
-import com.dianping.cat.message.internal.*;
-import com.dianping.cat.util.Properties;
-import com.dianping.cat.util.StringUtils;
-import com.dianping.cat.util.Threads;
-import com.dianping.cat.analyzer.EventAggregator;
-import com.dianping.cat.analyzer.LocalAggregator;
 import com.dianping.cat.message.Event;
 import com.dianping.cat.message.MessageProducer;
+import com.dianping.cat.message.Trace;
 import com.dianping.cat.message.Transaction;
+import com.dianping.cat.message.internal.*;
 import com.dianping.cat.message.io.TcpSocketSender;
 import com.dianping.cat.message.spi.MessageManager;
 import com.dianping.cat.message.spi.MessageTree;
 import com.dianping.cat.status.StatusUpdateTask;
+import com.dianping.cat.util.Properties;
+import com.dianping.cat.util.StringUtils;
+import com.dianping.cat.util.Threads;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.io.File;
+import java.util.*;
 
 public class Cat {
     private static MessageProducer producer;
@@ -58,6 +58,10 @@ public class Cat {
     public final static String CLIENT_CONFIG = "cat-client-config";
     public final static String UNKNOWN = "unknown";
 
+    private static String CAT_HOME = "";
+
+    private static final String[] CANDIDATE_HOMES = {"/home/admin/datas/cat/", "/data/appdatas/cat/"};
+
     public static boolean isJstackEnabled() {
         String enable = Properties.forString().fromEnv().fromSystem().getProperty("jstack_enable", "true");
 
@@ -65,35 +69,50 @@ public class Cat {
     }
 
     private static void checkAndInitialize() {
+        checkAndInitialize(null);
+    }
+
+    private static void checkAndInitialize(ClientConfig clientConfig) {
         try {
             if (!init) {
-            	ClientConfig clientConfig = getSpiClientConfig();
-				if (clientConfig == null) {
-					initializeInternal();
-				} else {
-					initializeInternal(clientConfig);
-				}
+                /*
+                 * 顺序
+                 * 1. 从jvm命令行/环境变量初始化
+                 * 2. 从spi配置初始化
+                 * 3. 从/data/appdatas/cat/client.xml配置文件初始化(官方)
+                 */
+                if (null == clientConfig) {
+                    clientConfig = getClientConfigFromSystemProperties();
+                }
+                if (null == clientConfig) {
+                    clientConfig = getSpiClientConfig();
+                }
+                if (null == clientConfig) {
+                    // 从/data/appdatas/cat/client.xml兜底；
+                    initializeInternal();
+                }
+                initializeInternal(clientConfig);
             }
         } catch (Exception e) {
             errorHandler(e);
         }
     }
-    
+
     private static ClientConfig getSpiClientConfig() {
-		ServiceLoader<ClientConfigProvider> clientConfigProviders = ServiceLoader.load(ClientConfigProvider.class);
-		if (clientConfigProviders == null) {
-			return null;
-		}
-		
-		Iterator<ClientConfigProvider> iterator = clientConfigProviders.iterator();
-		if (iterator.hasNext()){
-			//只支持一个ClientConfigProvider的实现，默认取查询结果第一个
-			ClientConfigProvider clientConfigProvider = (ClientConfigProvider)iterator.next();
-			return clientConfigProvider.getClientConfig();
-		} else {
-			return null;
-		}
-	}
+        ServiceLoader<ClientConfigProvider> clientConfigProviders = ServiceLoader.load(ClientConfigProvider.class);
+        if (clientConfigProviders == null) {
+            return null;
+        }
+
+        Iterator<ClientConfigProvider> iterator = clientConfigProviders.iterator();
+        if (iterator.hasNext()) {
+            //只支持一个ClientConfigProvider的实现，默认取查询结果第一个
+            ClientConfigProvider clientConfigProvider = (ClientConfigProvider) iterator.next();
+            return clientConfigProvider.getClientConfig();
+        } else {
+            return null;
+        }
+    }
 
     public static String createMessageId() {
         if (isEnabled()) {
@@ -143,8 +162,36 @@ public class Cat {
         }
     }
 
+    /**
+     * 优先级 CAT_HOME -> /home/admin/datas/cat -> /data/appdatas/cat
+     *
+     * @return
+     */
     public static String getCatHome() {
-        return Properties.forString().fromEnv().fromSystem().getProperty("CAT_HOME", "/data/appdatas/cat/");
+
+        if (CAT_HOME != null && !CAT_HOME.equals("")) {
+            return CAT_HOME;
+        }
+
+        CAT_HOME = com.dianping.cat.util.Properties.forString().fromEnv().fromSystem().getProperty("CAT_HOME", "");
+
+        if (CAT_HOME == null || CAT_HOME.equals("")) {
+
+            for (String path : CANDIDATE_HOMES) {
+                File f = new File(path);
+                try {
+                    f.mkdirs();
+                    if (f.exists()) {
+                        CAT_HOME = path;
+                        break;
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
+        return CAT_HOME;
     }
 
     public static String getCurrentMessageId() {
@@ -223,6 +270,31 @@ public class Cat {
 
     public static void initialize() {
         checkAndInitialize();
+    }
+
+    public static void initialize(ClientConfigProperty property) {
+        if (null == property || property.getServers() == null || property.getServers().length <= 0) {
+            checkAndInitialize();
+            return;
+        }
+        try {
+            ClientConfig config = new ClientConfig();
+
+            for (String host : property.getServers()) {
+                Server server = new Server(host);
+                server.setHttpPort(property.getHttpPort());
+                server.setPort(property.getPort());
+                config.addServer(server);
+            }
+
+            config.setDomain(property.getAppId());
+
+            initializeInternal(config);
+
+            CatLogger.getInstance().info("loaded CAT client info from property:" + property);
+        } catch (Exception e) {
+            errorHandler(e);
+        }
     }
 
     public static void initialize(String... servers) {
@@ -695,4 +767,43 @@ public class Cat {
         String getProperty(String key);
     }
 
+
+    /**
+     * 添加对于从环境变量配置CAT client的支持；
+     *
+     * @return
+     * @author ptang@leqee.com
+     */
+    private static ClientConfig getClientConfigFromSystemProperties() {
+
+        String hosts = Properties.forString().fromSystem().fromEnv().getProperty(CatConstants.CAT_HOSTS, null);
+
+        if (hosts == null || hosts.equals("")) {
+            return null;
+        }
+
+        Integer httpPort = Integer.parseInt(Properties.forString().fromSystem().fromEnv().getProperty(CatConstants.CAT_HTTP_PORT, "8080"));
+        Integer tcpPort = Integer.parseInt(Properties.forString().fromSystem().fromEnv().getProperty(CatConstants.CAT_TCP_PORT, "2280"));
+
+        List<Server> servers = new ArrayList<Server>();
+        for (String host : hosts.split(",")) {
+            Server server = new Server(host);
+            server.setHttpPort(httpPort);
+            server.setPort(tcpPort);
+            servers.add(server);
+        }
+
+        if (servers.isEmpty()) {
+            return null;
+        }
+
+        String domain = Properties.forString().fromSystem().fromEnv().getProperty(CatConstants.CAT_APP_ID, Cat.UNKNOWN);
+
+        ClientConfig config = new ClientConfig();
+        config.setServers(servers);
+        config.setDomain(domain);
+
+        CatLogger.getInstance().info("load info from system properties/env for cat client");
+        return config;
+    }
 }
