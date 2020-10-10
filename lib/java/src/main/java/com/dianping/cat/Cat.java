@@ -289,6 +289,7 @@ public class Cat {
 
             config.setDomain(property.getAppId());
 
+            enable();//ensure CAT is enabled.
             initializeInternal(config);
 
             CatLogger.getInstance().info("loaded CAT client info from property:" + property);
