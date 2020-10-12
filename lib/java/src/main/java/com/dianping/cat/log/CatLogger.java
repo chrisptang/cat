@@ -19,6 +19,7 @@
 package com.dianping.cat.log;
 
 import com.dianping.cat.util.Properties;
+import com.dianping.cat.util.StringUtils;
 import com.dianping.cat.util.Threads;
 
 import java.io.*;
@@ -33,9 +34,31 @@ public class CatLogger {
     private String lastPath;
     private boolean devMode;
     private ReentrantLock lock = new ReentrantLock();
-    private static final AtomicReference<String> DEFAULT_BASE_DIR = new AtomicReference<>("/data/applogs/cat");
-    private static CatLogger LOGGER = new CatLogger();
+    private static final String DEFAULT_CAT_LOG_ROOT = "/data/applogs/cat";
+    private static final AtomicReference<String> DEFAULT_BASE_DIR = new AtomicReference<>();
 
+    static {
+        //更改默认日志目录为：
+        // /home/user-name/logs/app-id/cat
+        String appId = System.getenv("app.id");
+        if (StringUtils.isEmpty(appId)) {
+            appId = System.getProperty("app.id");
+        }
+
+        if (!StringUtils.isEmpty(appId)) {
+            DEFAULT_BASE_DIR.set(System.getProperty("user.home") + "/logs/" + appId + "/cat");
+        } else {
+            DEFAULT_BASE_DIR.set(DEFAULT_CAT_LOG_ROOT);
+        }
+    }
+
+    private static final CatLogger LOGGER = new CatLogger();
+
+    /**
+     * 显式的更新CAT日志目录；
+     *
+     * @param newLogHome
+     */
     public static void updateLogHome(String newLogHome) {
         DEFAULT_BASE_DIR.set(newLogHome);
     }

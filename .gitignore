@@ -7,7 +7,8 @@ cf-ad-service-client/target/*
 *.log
 logs/*
 target/*
-cat-client/target/
+*/target/
+/target
+target/
+.idea/
 docker/mysql/
-lib/java/.idea/
-lib/java/target/
