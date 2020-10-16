@@ -12,3 +12,6 @@ target/*
 target/
 .idea/
 docker/mysql/
+*.jar
+*.war
+.travis.yml
