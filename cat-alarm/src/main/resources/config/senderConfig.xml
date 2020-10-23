@@ -17,7 +17,7 @@
     <sender id="sms" url="http://test/" type="post" successCode="200" batchSend="false">
         <par id="jsonm={type:808,mobile:'${receiver}',pair:{body='${content}'}}"/>
     </sender>
-    <sender id="webhook" url="http://test/?access_token=xxx" type="json" successCode="200">
-        <par id="json={type:'text',text:'${receiver}',pair:{body='${content}'}}"/>
+    <sender id="webhook" url="http://test/?access_token=xxx" type="json" successCode="ok">
+        <par id="json={type:'text',text:'${title} ${content}'}}"/>
     </sender>
 </sender-config>
