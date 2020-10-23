@@ -20,30 +20,41 @@ package com.dianping.cat.alarm.spi;
 
 public enum AlertChannel {
 
-	MAIL("mail"),
+    MAIL("mail", true),
 
-	SMS("sms"),
+    SMS("sms", true),
 
-	WEIXIN("weixin"),
+    WEIXIN("weixin", true),
 
-	DX("dx");
+    //通过webhook来发送消息的接口，比如企业微信和钉钉的告警机器人；
+    //不需要receiver
+    WEBHOOK("webhook", false),
 
-	private String m_name;
+    DX("dx", true);
 
-	private AlertChannel(String name) {
-		m_name = name;
-	}
+    private final String m_name;
 
-	public static AlertChannel findByName(String name) {
-		for (AlertChannel channel : values()) {
-			if (channel.getName().equals(name)) {
-				return channel;
-			}
-		}
-		return null;
-	}
+    private final boolean needReceivers;
 
-	public String getName() {
-		return m_name;
-	}
+    AlertChannel(String name, boolean needReceivers) {
+        m_name = name;
+        this.needReceivers = needReceivers;
+    }
+
+    public static AlertChannel findByName(String name) {
+        for (AlertChannel channel : values()) {
+            if (channel.getName().equals(name)) {
+                return channel;
+            }
+        }
+        return null;
+    }
+
+    public String getName() {
+        return m_name;
+    }
+
+    public boolean isNeedReceivers() {
+        return needReceivers;
+    }
 }

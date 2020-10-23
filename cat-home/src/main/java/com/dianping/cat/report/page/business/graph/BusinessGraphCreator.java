@@ -106,7 +106,7 @@ public class BusinessGraphCreator extends AbstractGraphCreator {
 		Map<String, double[]> dataWithOutFutures = removeFutureData(end, allCurrentValues);
 
 		Map<String, LineChart> charts = new LinkedHashMap<String, LineChart>();
-		List<AlertEntity> alertKeys = m_alertManager.queryLastestAlarmKey(5);
+		List<AlertEntity> alertKeys = m_alertManager.queryLatestAlarmKey(5);
 		int step = m_dataExtractor.getStep();
 
 		for (Entry<String, double[]> entry : dataWithOutFutures.entrySet()) {

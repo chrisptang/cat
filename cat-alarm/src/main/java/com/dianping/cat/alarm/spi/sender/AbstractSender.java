@@ -20,11 +20,21 @@ package com.dianping.cat.alarm.spi.sender;
 
 import com.dianping.cat.Cat;
 import com.dianping.cat.alarm.spi.config.SenderConfigManager;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.plexus.logging.LogEnabled;
 import org.codehaus.plexus.logging.Logger;
 import org.unidal.helper.Files;
 import org.unidal.lookup.annotation.Inject;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -32,6 +42,23 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public abstract class AbstractSender implements Sender, LogEnabled {
+
+    private static final RequestConfig REQUEST_CONFIG = RequestConfig.custom()
+            .setConnectTimeout(3000)
+            .setSocketTimeout(2000)
+            .setConnectionRequestTimeout(1000).build();
+
+    private static final PoolingHttpClientConnectionManager CONNECTION_MANAGER = new PoolingHttpClientConnectionManager();
+
+    static {
+        CONNECTION_MANAGER.setMaxTotal(50);
+        CONNECTION_MANAGER.setDefaultMaxPerRoute(10);
+        CONNECTION_MANAGER.setValidateAfterInactivity(120_000);
+    }
+
+    private static final CloseableHttpClient HTTP_CLIENT = HttpClients.custom()
+            .setConnectionManager(CONNECTION_MANAGER)
+            .setDefaultRequestConfig(REQUEST_CONFIG).build();
 
     @Inject
     protected SenderConfigManager m_senderConfigManager;
@@ -137,10 +164,58 @@ public abstract class AbstractSender implements Sender, LogEnabled {
             return httpGetSend(successCode, urlPrefix, urlPars);
         } else if ("post".equalsIgnoreCase(type)) {
             return httpPostSend(successCode, urlPrefix, urlPars);
+        } else if ("json".equalsIgnoreCase(type)) {
+            return httpJson(successCode, urlPrefix, urlPars);
         } else {
             Cat.logError(new RuntimeException("Illegal request type: " + type));
             return false;
         }
+    }
+
+    /**
+     * @param successCode : could be any
+     * @param webHookUrl  : webhook URL, access_token must be included
+     * @param json        : the json to be posted to the webhook URL.
+     * @return
+     */
+    private boolean httpJson(String successCode, String webHookUrl, String json) {
+        CloseableHttpResponse response = null;
+        try {
+            if (!(isValidWebhookUrl(webHookUrl))) {
+                Cat.logError(new IllegalArgumentException("Invalid webhook URL:" + webHookUrl));
+                return false;
+            }
+            HttpPost post = new HttpPost(webHookUrl);
+            post.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
+
+            response = HTTP_CLIENT.execute(post);
+            if (null == response) {
+                Cat.logError(new RuntimeException("Response is null for URL:" + webHookUrl));
+                return false;
+            }
+            String jsonResponse = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK
+                    && jsonResponse.contains(successCode)) {
+                return true;
+            } else {
+                Cat.logError("Http POST was unsuccessful, response:" + jsonResponse + ", URL:" + webHookUrl + ", json:" + json
+                        , new Exception(jsonResponse));
+            }
+        } catch (IOException e) {
+            String errMsg = String.format("IOException while posting JSON to URL:%s, JSON:\n%s", webHookUrl, json);
+            m_logger.error(errMsg, e);
+            Cat.logError(errMsg, e);
+        } finally {
+            EntityUtils.consumeQuietly(response != null ? response.getEntity() : null);
+        }
+
+        return false;
+    }
+
+    private static final boolean isValidWebhookUrl(String url) {
+        if (url == null || url.trim().length() <= 1) return false;
+        String urlLower = url.toLowerCase();
+        return urlLower.contains("access_token=") || urlLower.contains("accesstoken=") || urlLower.contains("token=");
     }
 
     public com.dianping.cat.alarm.sender.entity.Sender querySender() {

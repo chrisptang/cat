@@ -19,6 +19,7 @@
 package com.dianping.cat.alarm.spi.receiver;
 
 import com.dianping.cat.alarm.spi.AlertChannel;
+import com.google.common.collect.Lists;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.InitializationException;
 import org.unidal.lookup.ContainerHolder;
@@ -31,27 +32,31 @@ import java.util.Map;
 @Named
 public class ContactorManager extends ContainerHolder implements Initializable {
 
-	private Map<String, Contactor> m_contactors = new HashMap<String, Contactor>();
+    private Map<String, Contactor> m_contactors = new HashMap<String, Contactor>();
 
-	@Override
-	public void initialize() throws InitializationException {
-		m_contactors = lookupMap(Contactor.class);
-	}
+    @Override
+    public void initialize() throws InitializationException {
+        m_contactors = lookupMap(Contactor.class);
+    }
 
-	public List<String> queryReceivers(String group, AlertChannel channel, String type) {
-		Contactor contactor = m_contactors.get(type);
+    public List<String> queryReceivers(String group, AlertChannel channel, String type) {
+        Contactor contactor = m_contactors.get(type);
 
-		if (AlertChannel.MAIL == channel) {
-			return contactor.queryEmailContactors(group);
-		} else if (AlertChannel.SMS == channel) {
-			return contactor.querySmsContactors(group);
-		} else if (AlertChannel.WEIXIN == channel) {
-			return contactor.queryWeiXinContactors(group);
-		} else if (AlertChannel.DX == channel) {
-			return contactor.queryDXContactors(group);
-		} else {
-			throw new RuntimeException("unsupported channel");
-		}
-	}
+        switch (channel) {
+            case WEBHOOK:
+                // Webhook doesn't need receivers;
+                return Lists.newLinkedList();
+            case DX:
+                return contactor.queryDXContactors(group);
+            case SMS:
+                return contactor.querySmsContactors(group);
+            case MAIL:
+                return contactor.queryEmailContactors(group);
+            case WEIXIN:
+                return contactor.queryWeiXinContactors(group);
+            default:
+                throw new RuntimeException("unsupported channel:" + channel);
+        }
+    }
 
 }
