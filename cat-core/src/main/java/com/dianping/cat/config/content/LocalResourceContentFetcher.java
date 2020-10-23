@@ -18,35 +18,58 @@
  */
 package com.dianping.cat.config.content;
 
+import com.dianping.cat.Cat;
 import org.codehaus.plexus.logging.LogEnabled;
 import org.codehaus.plexus.logging.Logger;
 import org.unidal.helper.Files;
 import org.unidal.lookup.annotation.Named;
 
-import com.dianping.cat.Cat;
-
 @Named(type = ContentFetcher.class)
 public class LocalResourceContentFetcher implements ContentFetcher, LogEnabled {
-	private final String PATH = "/config/";
+    private final String PATH = "/config/";
 
-	private Logger m_logger;
+    private Logger m_logger;
 
-	@Override
-	public String getConfigContent(String configName) {
-		String path = PATH + configName + ".xml";
-		String content = "";
+    @Override
+    public String getConfigContent(String configName) {
+        String path = PATH + configName + ".xml";
+        String content = "";
 
-		try {
-			content = Files.forIO().readFrom(this.getClass().getResourceAsStream(path), "utf-8");
-		} catch (Exception e) {
-			m_logger.warn("can't find local default config " + configName);
-			Cat.logError(configName + " can't find", e);
-		}
-		return content;
-	}
+        //可以通过环境变量来设定默认的服务端IP 以及端口号，方便CAT快速部署&启动；
+        String serverIp = System.getenv("SERVER_IP");
+        String catHttpPort = System.getenv("CAT_HTTP_PORT");
 
-	@Override
-	public void enableLogging(Logger logger) {
-		m_logger = logger;
-	}
+        try {
+            content = Files.forIO().readFrom(this.getClass().getResourceAsStream(path), "utf-8");
+            if (null == serverIp || serverIp.length() <= 1) {
+                serverIp = "127.0.0.1";
+            }
+            if (!isValidPort(catHttpPort)) {
+                catHttpPort = "8080";
+            }
+            content = content.replaceAll("SERVER_IP", serverIp);
+            content = content.replaceAll("CAT_HTTP_PORT", catHttpPort);
+        } catch (Exception e) {
+            m_logger.warn("can't find local default config " + configName);
+            Cat.logError(configName + " can't find", e);
+        }
+        return content;
+    }
+
+    @Override
+    public void enableLogging(Logger logger) {
+        m_logger = logger;
+    }
+
+    private static boolean isValidPort(String port) {
+        if (null == port || port.length() <= 0) {
+            return false;
+        }
+        try {
+            int portInt = Integer.parseInt(port);
+            return portInt >= 80 && portInt <= 65535;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

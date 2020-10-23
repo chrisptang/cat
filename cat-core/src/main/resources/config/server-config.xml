@@ -7,7 +7,7 @@
          <property name="send-machine" value="false"/>
          <property name="alarm-machine" value="false"/>
          <property name="hdfs-enabled" value="false"/>
-         <property name="remote-servers" value="127.0.0.1:8080"/>
+         <property name="remote-servers" value="SERVER_IP:CAT_HTTP_PORT"/>
       </properties>
       <storage local-base-dir="/data/appdatas/cat/bucket/" max-hdfs-storage-time="15" local-report-storage-time="2" local-logivew-storage-time="1" har-mode="true" upload-thread="5">
          <hdfs id="dump" max-size="128M" server-uri="hdfs://127.0.0.1/" base-dir="/user/cat/dump"/>
@@ -28,7 +28,7 @@
          </long-config>
       </consumer>
    </server>
-   <server id="127.0.0.1">
+   <server id="SERVER_IP">
       <properties>
          <property name="job-machine" value="true"/>
          <property name="send-machine" value="true"/>
