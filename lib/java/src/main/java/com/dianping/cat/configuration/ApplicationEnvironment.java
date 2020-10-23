@@ -18,15 +18,15 @@
  */
 package com.dianping.cat.configuration;
 
+import com.dianping.cat.Cat;
+import com.dianping.cat.configuration.client.entity.ClientConfig;
+import com.dianping.cat.configuration.client.entity.Server;
+import com.dianping.cat.configuration.client.transform.DefaultSaxParser;
 import com.dianping.cat.log.CatLogger;
 import com.dianping.cat.util.Files;
 import com.dianping.cat.util.NetworkHelper;
 import com.dianping.cat.util.Splitters;
 import com.dianping.cat.util.StringUtils;
-import com.dianping.cat.Cat;
-import com.dianping.cat.configuration.client.entity.ClientConfig;
-import com.dianping.cat.configuration.client.entity.Server;
-import com.dianping.cat.configuration.client.transform.DefaultSaxParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,27 +43,29 @@ public class ApplicationEnvironment {
     private static final String CLIENT_FILE = "client.xml";
     public static final String ENVIRONMENT;
     public static final String CELL;
-    public static final String VERSION = "2.0.1";
+    public static final String VERSION = "3.0.0";
 
     static {
-        String env;
-        String cell;
+        String env = System.getProperty("env");
+        String cell = "";
 
-        try {
-            String file = "/data/webapps/appenv";
-            Properties pro = new Properties();
+        if (StringUtils.isEmpty(env)) {
+            try {
+                String file = "/data/webapps/appenv";
+                Properties pro = new Properties();
 
-            pro.load(new FileInputStream(new File(file)));
-            env = pro.getProperty("env");
+                pro.load(new FileInputStream(new File(file)));
+                env = pro.getProperty("env");
 
-            if (StringUtils.isEmpty(env)) {
-                env = pro.getProperty("deployenv");
+                if (StringUtils.isEmpty(env)) {
+                    env = pro.getProperty("deployenv");
+                }
+
+                cell = pro.getProperty("cell");
+            } catch (Exception e) {
+                env = Cat.UNKNOWN;
+                cell = "";
             }
-
-            cell = pro.getProperty("cell");
-        } catch (Exception e) {
-            env = Cat.UNKNOWN;
-            cell = "";
         }
 
         if (env == null) {
