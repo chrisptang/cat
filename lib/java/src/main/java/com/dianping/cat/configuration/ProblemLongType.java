@@ -30,14 +30,14 @@ public enum ProblemLongType {
     LONG_CALL("long-call", 100) {
         @Override
         protected boolean checkLongType(String type) {
-            return "PigeonCall".equals(type) || "OctoCall".equals(type) || "Call".equals(type);
+            return "DubboCall".equals(type) || "OctoCall".equals(type) || "Call".equals(type);
         }
     },
 
     LONG_SERVICE("long-service", 100) {
         @Override
         protected boolean checkLongType(String type) {
-            return "PigeonService".equals(type) || "OctoService".equals(type) || "Service".equals(type);
+            return "DubboService".equals(type) || "OctoService".equals(type) || "Service".equals(type);
         }
     },
 

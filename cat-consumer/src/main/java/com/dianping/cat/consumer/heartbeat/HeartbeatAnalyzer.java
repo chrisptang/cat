@@ -193,7 +193,7 @@ public class HeartbeatAnalyzer extends AbstractMessageAnalyzer<HeartbeatReport> 
 
 				thread.findOrCreateExtensionDetail("HttpThread").setValue(threadInfo.getHttpThreadCount());
 				thread.findOrCreateExtensionDetail("CatThread").setValue(threadInfo.getCatThreadCount());
-				thread.findOrCreateExtensionDetail("PigeonThread").setValue(threadInfo.getPigeonThreadCount());
+				thread.findOrCreateExtensionDetail("DubboThread").setValue(threadInfo.getPigeonThreadCount());
 				thread.findOrCreateExtensionDetail("ActiveThread").setValue(threadInfo.getCount());
 				thread.findOrCreateExtensionDetail("StartedThread").setValue(threadInfo.getTotalStartedCount());
 

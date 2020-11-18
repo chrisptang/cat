@@ -47,11 +47,11 @@ public class StorageRPCBuilder implements StorageBuilder {
 			if (message instanceof Event) {
 				String type = message.getType();
 
-				if (type.equals("PigeonCall.app")) {
+				if (type.equals("DubboCall.app")) {
 					id = message.getName();
 				}
 
-				if (type.equals("PigeonCall.server")) {
+				if (type.equals("DubboCall.server")) {
 					ip = message.getName();
 					int index = ip.indexOf(':');
 
@@ -78,7 +78,7 @@ public class StorageRPCBuilder implements StorageBuilder {
 	public boolean isEligable(Transaction t) {
 		String type = t.getType();
 
-		return "PigeonCall".equals(type) || "Call".equals(type);
+		return "DubboCall".equals(type) || "Call".equals(type);
 	}
 
 }

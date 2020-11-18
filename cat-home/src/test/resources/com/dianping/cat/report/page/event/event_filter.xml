@@ -222,20 +222,20 @@
 		<type id="RemoteCall" totalCount="4" failCount="0" failPercent="0.00" tps="0.00">
 			<successMessageUrl>MobileApi-0a014dc1-1340002655592-0
 			</successMessageUrl>
-			<name id="PigeonRequest" totalCount="2" failCount="0"
+			<name id="DubboRequest" totalCount="2" failCount="0"
 				failPercent="0.00" tps="0.00">
 				<successMessageUrl>MobileApi-0a014dc1-1340002655592-0
 				</successMessageUrl>
 				<range value="55" count="2" fails="0" />
 			</name>
-			<name id="PigeonRespone" totalCount="2" failCount="0"
+			<name id="DubboRespone" totalCount="2" failCount="0"
 				failPercent="0.00" tps="0.00">
 				<successMessageUrl>MobileApi-0a014dc1-1340002655592-0
 				</successMessageUrl>
 				<range value="55" count="2" fails="0" />
 			</name>
 		</type>
-		<type id="PigeonRespone" totalCount="2" failCount="0"
+		<type id="DubboRespone" totalCount="2" failCount="0"
 			failPercent="0.00" tps="0.00">
 			<successMessageUrl>MobileApi-0a014dc1-1340002655816-0
 			</successMessageUrl>

@@ -300,8 +300,8 @@ public class StatusInfoCollector extends BaseVisitor {
 
 		frameworkThread.findOrCreateExtensionDetail("HttpThread").setValue(jbossThreadsCount + jettyThreadsCount);
 		frameworkThread.findOrCreateExtensionDetail("CatThread").setValue(countThreadsByPrefix(threads, "Cat-"));
-		frameworkThread.findOrCreateExtensionDetail("PigeonThread")
-								.setValue(countThreadsByPrefix(threads, "Pigeon-", "DPSF-", "Netty-", "Client-ResponseProcessor"));
+		frameworkThread.findOrCreateExtensionDetail("DubboThread")
+								.setValue(countThreadsByPrefix(threads, "Dubbo-", "DPSF-", "Netty-", "Client-ResponseProcessor"));
 		frameworkThread.findOrCreateExtensionDetail("ActiveThread").setValue(bean.getThreadCount());
 		frameworkThread.findOrCreateExtensionDetail("StartedThread").setValue(bean.getTotalStartedThreadCount());
 

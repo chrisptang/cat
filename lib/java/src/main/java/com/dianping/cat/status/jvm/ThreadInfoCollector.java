@@ -128,7 +128,7 @@ public class ThreadInfoCollector extends AbstractCollector {
             map.put("jvm.thread.http.count", tomcatThreadsCount + jettyThreadsCount);
             map.put("jvm.thread.cat.count", countThreadsByPrefix(threadInfos, "Cat-", "cat-"));
             map.put("jvm.thread.pigeon.count",
-                    countThreadsByPrefix(threadInfos, "Pigeon-", "DPSF-", "Client-ResponseProcessor"));
+                    countThreadsByPrefix(threadInfos, "Dubbo-", "DPSF-", "Client-ResponseProcessor"));
         }
 
         return map;

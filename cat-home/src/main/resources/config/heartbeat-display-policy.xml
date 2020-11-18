@@ -31,7 +31,7 @@
    </group>
    <group id="FrameworkThread" order="4">
       <metric id="HttpThread" unit="1" delta="false" order="1" lable="个数" alert="true"/>
-      <metric id="PigeonThread" unit="1" delta="false" order="2" lable="个数" alert="true"/>
+      <metric id="DubboThread" unit="1" delta="false" order="2" lable="个数" alert="true"/>
       <metric id="ActiveThread" unit="1" delta="false" order="3" lable="个数" alert="true"/>
       <metric id="CatThread" unit="1" delta="false" order="4" lable="个数" alert="false"/>
       <metric id="StartedThread" unit="1" delta="true" order="5" lable="个数" alert="false"/>

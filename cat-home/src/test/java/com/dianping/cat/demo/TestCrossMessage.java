@@ -67,10 +67,10 @@ public class TestCrossMessage {
 	}
 
 	private void sendServiceMsg(String method, String server, String serverIp, String client, String clientIp) {
-		Transaction t = Cat.newTransaction("PigeonService", method);
+		Transaction t = Cat.newTransaction("DubboService", method);
 
-		Cat.logEvent("PigeonService.client", clientIp);
-		Cat.logEvent("PigeonService.app", client);
+		Cat.logEvent("DubboService.client", clientIp);
+		Cat.logEvent("DubboService.app", client);
 
 		MessageTree tree = Cat.getManager().getThreadLocalMessageTree();
 
@@ -82,11 +82,11 @@ public class TestCrossMessage {
 
 	private void sendClientMsg(String method, String client, String clientIp, String port, String server,
 							String serverIp) {
-		Transaction t = Cat.newTransaction("PigeonCall", method);
+		Transaction t = Cat.newTransaction("DubboCall", method);
 
-		Cat.logEvent("PigeonCall.server", serverIp);
-		Cat.logEvent("PigeonCall.app", server);
-		Cat.logEvent("PigeonCall.port", port);
+		Cat.logEvent("DubboCall.server", serverIp);
+		Cat.logEvent("DubboCall.app", server);
+		Cat.logEvent("DubboCall.port", port);
 
 		MessageTree tree = Cat.getManager().getThreadLocalMessageTree();
 

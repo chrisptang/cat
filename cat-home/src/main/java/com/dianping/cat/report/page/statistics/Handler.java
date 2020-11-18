@@ -155,7 +155,7 @@ public class Handler implements PageHandler<Context> {
 			if (d.findApplicationState("URL") != null) {
 				dUWebList.add(d);
 			}
-			if (d.findApplicationState("PigeonService") != null) {
+			if (d.findApplicationState("DubboService") != null) {
 				dUServiceList.add(d);
 			}
 		}

@@ -52,7 +52,7 @@
 	<extension id="FrameworkThread">
 		<extensionDetail id="HttpThread" value="153.0" />
 		<extensionDetail id="CatThread" value="10.0" />
-		<extensionDetail id="PigeonThread" value="0.0" />
+		<extensionDetail id="DubboThread" value="0.0" />
 		<extensionDetail id="ActiveThread" value="247.0" />
 		<extensionDetail id="StartedThread" value="19847.0" />
 	</extension>

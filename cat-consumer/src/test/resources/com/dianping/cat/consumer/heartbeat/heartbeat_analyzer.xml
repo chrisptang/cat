@@ -29,7 +29,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -65,7 +65,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -101,7 +101,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -137,7 +137,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -173,7 +173,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -209,7 +209,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -245,7 +245,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -281,7 +281,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -317,7 +317,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>
@@ -353,7 +353,7 @@
          <extension id="FrameworkThread">
             <detail id="HttpThread" value="153.0"/>
             <detail id="CatThread" value="10.0"/>
-            <detail id="PigeonThread" value="0.0"/>
+            <detail id="DubboThread" value="0.0"/>
             <detail id="ActiveThread" value="247.0"/>
             <detail id="StartedThread" value="19847.0"/>
          </extension>

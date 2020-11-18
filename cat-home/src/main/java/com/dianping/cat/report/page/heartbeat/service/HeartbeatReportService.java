@@ -177,7 +177,7 @@ public class HeartbeatReportService extends AbstractReportService<HeartbeatRepor
 
 				thread.findOrCreateDetail("HttpThread").setValue(period.getHttpThreadCount());
 				thread.findOrCreateDetail("CatThread").setValue(period.getCatThreadCount());
-				thread.findOrCreateDetail("PigeonThread").setValue(period.getPigeonThreadCount());
+				thread.findOrCreateDetail("DubboThread").setValue(period.getPigeonThreadCount());
 				thread.findOrCreateDetail("ActiveThread").setValue(period.getThreadCount());
 				thread.findOrCreateDetail("StartedThread").setValue(period.getTotalStartedCount());
 

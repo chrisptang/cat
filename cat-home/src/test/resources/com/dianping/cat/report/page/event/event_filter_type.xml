@@ -28,7 +28,7 @@
 <successMessageUrl>MobileApi-0a014dc1-1340002655592-0
 			</successMessageUrl>
 </type>
-<type id="PigeonRespone" totalCount="2" failCount="0" failPercent="0.00" tps="0.00">
+<type id="DubboRespone" totalCount="2" failCount="0" failPercent="0.00" tps="0.00">
 <successMessageUrl>MobileApi-0a014dc1-1340002655816-0
 			</successMessageUrl>
 </type>

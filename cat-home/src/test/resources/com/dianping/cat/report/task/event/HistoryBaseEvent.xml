@@ -10,7 +10,7 @@
 			<successMessageUrl>MobileApi-0a014dbf-1340004471358-0
 			</successMessageUrl>
 		</type>
-		<type id="PigeonRespone" totalCount="20000" failCount="0"
+		<type id="DubboRespone" totalCount="20000" failCount="0"
 			failPercent="0.00" tps="0.23">
 			<successMessageUrl>MobileApi-0a014dbf-1340004471574-0
 			</successMessageUrl>

@@ -118,13 +118,13 @@ public class ProblemAnalyzerTest extends ComponentTestCase {
 				t.setType("SQL");
 				break;
 			case 4:
-				t.setType("PigeonCall");
+				t.setType("DubboCall");
 				break;
 			case 5:
 				t.setType("Service");
 				break;
 			case 6:
-				t.setType("PigeonService");
+				t.setType("DubboService");
 				break;
 			}
 

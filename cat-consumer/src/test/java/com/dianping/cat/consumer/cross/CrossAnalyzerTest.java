@@ -89,27 +89,27 @@ public class CrossAnalyzerTest extends ComponentTestCase {
 		DefaultTransaction t;
 
 		if (i % 2 == 0) {
-			t = new DefaultTransaction("PigeonCall", "Cat-Test-Call", null);
-			DefaultEvent event = new DefaultEvent("PigeonCall.server", "192.168.1.0:3000:class:method1");
+			t = new DefaultTransaction("DubboCall", "Cat-Test-Call", null);
+			DefaultEvent event = new DefaultEvent("DubboCall.server", "192.168.1.0:3000:class:method1");
 
 			event.setTimestamp(m_timestamp + 5 * 60 * 1000);
 			event.setStatus(Message.SUCCESS);
 			t.addChild(event);
 
-			DefaultEvent eventApp = new DefaultEvent("PigeonCall.app", "server");
+			DefaultEvent eventApp = new DefaultEvent("DubboCall.app", "server");
 
 			eventApp.setTimestamp(m_timestamp + 5 * 60 * 1000 + 100);
 			eventApp.setStatus(Message.SUCCESS);
 			t.addChild(eventApp);
 		} else {
-			t = new DefaultTransaction("PigeonService", "Cat-Test-Service", null);
-			DefaultEvent event = new DefaultEvent("PigeonService.client", "192.168.1.2:3000:class:method2");
+			t = new DefaultTransaction("DubboService", "Cat-Test-Service", null);
+			DefaultEvent event = new DefaultEvent("DubboService.client", "192.168.1.2:3000:class:method2");
 
 			event.setTimestamp(m_timestamp + 5 * 60 * 1000);
 			event.setStatus(Message.SUCCESS);
 			t.addChild(event);
 
-			DefaultEvent eventApp = new DefaultEvent("PigeonService.app", "client");
+			DefaultEvent eventApp = new DefaultEvent("DubboService.app", "client");
 
 			eventApp.setTimestamp(m_timestamp + 5 * 60 * 1000 + 100);
 			eventApp.setStatus(Message.SUCCESS);

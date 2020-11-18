@@ -12,25 +12,25 @@
       <dependency key="DB:database2" type="Database" target="DB:database2" total-count="3" avg="1.00" error-count="3" sum="3.00"/>
       <dependency key="DB:database3" type="Database" target="DB:database3" total-count="3" avg="1.00" error-count="4" sum="3.00"/>
       <dependency key="DB:database4" type="Database" target="DB:database4" total-count="3" avg="1.00" error-count="4" sum="3.00"/>
-      <dependency key="UserService" type="PigeonServer" target="UserService" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserService1" type="PigeonServer" target="UserService1" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserService2" type="PigeonServer" target="UserService2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserWeb" type="PigeonClient" target="UserWeb" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserWeb3" type="PigeonClient" target="UserWeb3" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService" type="DubboServer" target="UserService" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService1" type="DubboServer" target="UserService1" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService2" type="DubboServer" target="UserService2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserWeb" type="DubboClient" target="UserWeb" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserWeb3" type="DubboClient" target="UserWeb3" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
    </segment>
    <segment id="19">
-      <index name="PigeonCall" total-count="10" error-count="10" sum="12.00" avg="1.20"/>
-      <index name="PigeonService" total-count="10" error-count="10" sum="12.00" avg="1.20"/>
+      <index name="DubboCall" total-count="10" error-count="10" sum="12.00" avg="1.20"/>
+      <index name="DubboService" total-count="10" error-count="10" sum="12.00" avg="1.20"/>
       <index name="URL" total-count="2" error-count="0" sum="2.00" avg="1.00"/>
       <dependency key="DB:database0" type="Database" target="DB:database0" total-count="3" avg="1.00" error-count="0" sum="3.00"/>
       <dependency key="DB:database1" type="Database" target="DB:database1" total-count="3" avg="1.00" error-count="0" sum="3.00"/>
       <dependency key="DB:database2" type="Database" target="DB:database2" total-count="3" avg="1.00" error-count="0" sum="3.00"/>
       <dependency key="DB:database3" type="Database" target="DB:database3" total-count="3" avg="1.00" error-count="0" sum="3.00"/>
-      <dependency key="UserService" type="PigeonServer" target="UserService" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserService1" type="PigeonServer" target="UserService1" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserService2" type="PigeonServer" target="UserService2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserWeb" type="PigeonClient" target="UserWeb" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
-      <dependency key="UserWeb2" type="PigeonClient" target="UserWeb2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService" type="DubboServer" target="UserService" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService1" type="DubboServer" target="UserService1" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserService2" type="DubboServer" target="UserService2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserWeb" type="DubboClient" target="UserWeb" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
+      <dependency key="UserWeb2" type="DubboClient" target="UserWeb2" total-count="20" avg="20.00" error-count="20" sum="400.00"/>
    </segment>
 </dependency-report>
 
