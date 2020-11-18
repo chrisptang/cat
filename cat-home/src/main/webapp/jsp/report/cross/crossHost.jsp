@@ -46,7 +46,7 @@
 </script>
 <table class='table table-striped table-condensed  '>
 		<c:if test="${!empty model.hostInfo.callProjectsInfo}">
-		<tr><td colspan="7" style="text-align:center"><strong>调用其他Dubbo服务</strong></td></tr>
+		<tr><td colspan="7" style="text-align:center"><strong>Dubbo服务调用 [ 本应用作为Dubbo服务调用方 ]</strong></td></tr>
 		<tr>
 			<th class="left">Type</th>
 			<th class="left"><a href="?op=host&domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&project=${payload.projectName}&serviceSort=${model.serviceSort}&callSort=name">RemoteId</a></th>
@@ -70,7 +70,7 @@
 		</c:if>
 		
 		<c:if test="${!empty model.hostInfo.serviceProjectsInfo}">
-			<tr><td colspan="7" style="text-align:center"><strong>提供Dubbo服务 [ 服务器端数据 ]</strong></td>
+			<tr><td colspan="7" style="text-align:center"><strong>提供Dubbo服务 [ 本应用作为Dubbo服务端 ]</strong></td>
 			<c:if test="${!empty model.hostInfo.callerProjectsInfo}">
 				<td></td>
 				<td colspan="7" style="text-align:center"><strong>提供Dubbo服务 [ 客户端数据 ]</strong></td>
