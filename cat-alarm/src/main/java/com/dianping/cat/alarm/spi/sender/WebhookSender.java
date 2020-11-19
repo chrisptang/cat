@@ -1,8 +1,13 @@
 package com.dianping.cat.alarm.spi.sender;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.dianping.cat.Cat;
+import com.dianping.cat.alarm.sender.entity.Par;
 import com.dianping.cat.alarm.sender.entity.Sender;
 import com.dianping.cat.alarm.spi.AlertChannel;
+
+import java.util.List;
 
 public class WebhookSender extends AbstractSender {
 
@@ -25,24 +30,32 @@ public class WebhookSender extends AbstractSender {
         String title = message.getTitle().replaceAll(",", " ");
         String content = message.getContent().replaceAll(",", " ").replaceAll("<a href.*(?=</a>)</a>", "");
         String urlPrefix = sender.getUrl();
-        String urlPars = m_senderConfigManager.queryParString(sender);
 
-        if (!urlPars.contains("json=")) {
-            Cat.logError("No parameter 'json' found, please check AlertChannel:Webhook's configuration", new Exception());
+        // 只需要一个json作为参数；
+        List<Par> parList = sender.getPars();
+        if (null == parList || parList.size() <= 0) {
+            Cat.logError("No parameter configured for sender:" + sender, new Exception());
             return false;
         }
+        String parJson = parList.get(0).getId();
 
-        String json = extractJsonParameter(urlPars, "json");
+
+        if (parJson.contains("json=")) {
+            parJson = parJson.replace("json=", "");
+        }
 
         try {
-            json = json.replace("${domain}", domain)
+            //just for verification
+            JSONObject jsonObject = JSON.parseObject(parJson);
+            parJson = parJson.replace("${domain}", domain)
                     .replace("${title}", title)
-                    .replace("${content}", content);
+                    .replace("${content}", content)
+                    .replace("${type}", message.getType());
         } catch (Exception e) {
             Cat.logError(e);
         }
 
-        return httpSend(sender.getSuccessCode(), sender.getType(), urlPrefix, json);
+        return httpSend(sender.getSuccessCode(), sender.getType(), urlPrefix, parJson);
     }
 
     private static String extractJsonParameter(String urlQueryParameter, String parameterName) {
@@ -52,8 +65,7 @@ public class WebhookSender extends AbstractSender {
         }
         for (String valuePair : urlQueryParameter.split("&")) {
             if (valuePair.contains("json=")) {
-                json = valuePair.split("=")[1];
-                break;
+                return valuePair.replace("json=", "");
             }
         }
         return json;
