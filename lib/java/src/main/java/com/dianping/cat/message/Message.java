@@ -34,6 +34,8 @@ package com.dianping.cat.message;
 public interface Message {
     String SUCCESS = "0";
 
+    String ERROR = "ERROR";
+
     /**
      * add one or multiple key-value pairs to the message.
      *
