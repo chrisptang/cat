@@ -62,8 +62,11 @@ public class ProcessorInfoCollector extends AbstractCollector {
             } catch (Exception e) {
                 Cat.logError(e);
             }
-            map.put("system.process.used.phyical.memory",
+            map.put("system.process.free.physical.memory", osBean.getFreePhysicalMemorySize());
+            map.put("system.process.used.physical.memory",
                     osBean.getTotalPhysicalMemorySize() - osBean.getFreePhysicalMemorySize());
+            map.put("system.process.used.physical.memory.percent",
+                    100 - 100 * osBean.getFreePhysicalMemorySize() / osBean.getTotalPhysicalMemorySize());
             map.put("system.process.used.swap.size", osBean.getTotalSwapSpaceSize() - osBean.getFreeSwapSpaceSize());
         }
 
