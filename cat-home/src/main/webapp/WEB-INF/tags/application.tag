@@ -66,13 +66,13 @@
 				</li>			
 				<li id="Heartbeat_report" >
 					<a href="/cat/r/h?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&reportType=${payload.reportType}&op=${payload.action.name}">
-						<i class="menu-icon  fa fa-heart"></i>
+						<i class="menu-icon fa fa-heart"></i>
 						<span class="menu-text">Heartbeat</span>
 					</a>
 				</li>		
 				<li id="Cross_report" >
 					<a href="/cat/r/cross?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&reportType=${payload.reportType}&op=${payload.action.name}">
-						<i class="menu-icon  glyphicon glyphicon-random"></i>
+						<i class="menu-icon glyphicon glyphicon-random"></i>
 						<span class="menu-text">Cross</span>
 					</a>
 				</li>
@@ -106,9 +106,12 @@
 							<%--<b class="arrow"></b></li> &ndash;%&gt;--%>
 					<%--</ul>--%>
 				<%--</li>--%>
-				<%-- <li id="Dependency_report" class="hsub"><a href="/cat/r/dependency?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&reportType=view&op=view" class="dropdown-toggle"> <i class="menu-icon glyphicon glyphicon-road"></i> <span class="menu-text">Dependency</span>
+				<li id="Dependency_report" class="hsub">
+				    <a href="/cat/r/dependency?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&reportType=view&op=view" class="dropdown-toggle">
+				        <i class="menu-icon glyphicon glyphicon-road"></i> <span class="menu-text">Dependency</span>
 						<b class="arrow fa fa-angle-down"></b>
-				</a> <b class="arrow"></b>
+				    </a>
+				    <b class="arrow"></b>
 					<ul class="submenu">
 						<li id="dependency_dashboard"><a href="/cat/r/dependency?op=dashboard&domain=${model.domain}&date=${model.date}">
 							<i class="menu-icon fa fa-caret-right"></i>综合大盘</a>
@@ -121,7 +124,7 @@
 							<b class="arrow"></b></li>
 						
 					</ul>
-				</li> --%>
+				</li>
 				<%--<li id="Matrix_report" >--%>
 					<%--<a href="/cat/r/matrix?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&reportType=${payload.reportType}&op=${payload.action.name}">--%>
 						<%--<i class="menu-icon  fa  fa-flask"></i>--%>
@@ -134,54 +137,62 @@
 						<span class="menu-text">State</span>
 					</a>
 				</li>
-				<%-- <li id="Offline_report" class="hsub"><a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-film"></i> <span class="menu-text">Offline</span>
+				<li id="Alert_report" >
+                    <a href="/cat/r/alert?domain=${model.domain}&op=view">
+                        <i class="menu-icon fa fa-tasks"></i>
+                        <span class="menu-text">Alarms</span>
+                    </a>
+                </li>
+				<li id="Offline_report" class="hsub"><a href="#" class="dropdown-toggle">
+				    <i class="menu-icon fa fa-film"></i> <span class="menu-text">Dubbo</span>
 						<b class="arrow fa fa-angle-down"></b>
 					</a> <b class="arrow"></b>
 					<ul class="submenu">
-						<li id="overload_report" >
-						<a href="/cat/r/overload?domain=${model.domain}&op=${payload.action.name}">
-							<i class="menu-icon  fa  fa-flask"></i>
-							<span class="menu-text">报表容量统计</span>
-						</a>
-					</li>
-					<li id="service_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=service">
-							<i class="menu-icon glyphicon glyphicon-check"></i>
-							<span class="menu-text">服务可用排行</span>
-						</a>
-					</li>
-					<li id="client_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=client">
-							<i class="menu-icon fa  fa-exchange"></i>
-							<span class="menu-text">服务调用排行</span>
-						</a>
-					</li>
-					<li id="utilization_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=utilization">
-							<i class="menu-icon  fa fa-glass"></i>
-							<span class="menu-text">线上容量规划</span>
-						</a>
-					</li>
-					<li id="jar_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=jar">
-							<i class="menu-icon  fa fa-briefcase"></i>
-							<span class="menu-text">线上JAR版本</span>
-						</a>
-					</li>
-					<li id="heavy_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=heavy">
-							<i class="menu-icon  fa fa-circle"></i>
-							<span class="menu-text">重量访问排行</span>
-						</a>
-					</li>
-					<li id="summary_report" >
-						<a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=summary">
-							<i class="menu-icon  fa fa-lightbulb-o"></i>
-							<span class="menu-text">告警智能分析</span>
-						</a>
-					</li>
+                            <li id="overload_report" >
+                            <a href="/cat/r/overload?domain=${model.domain}&op=${payload.action.name}">
+                                <i class="menu-icon  fa  fa-flask"></i>
+                                <span class="menu-text">报表容量统计</span>
+                            </a>
+                        </li>
+                        <li id="service_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=service">
+                                <i class="menu-icon glyphicon glyphicon-check"></i>
+                                <span class="menu-text">服务可用排行</span>
+                            </a>
+                        </li>
+                        <li id="client_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=client">
+                                <i class="menu-icon fa  fa-exchange"></i>
+                                <span class="menu-text">服务调用排行</span>
+                            </a>
+                        </li>
+                        <%--
+                        <li id="utilization_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=utilization">
+                                <i class="menu-icon  fa fa-glass"></i>
+                                <span class="menu-text">线上容量规划</span>
+                            </a>
+                        </li>
+                        <li id="jar_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=jar">
+                                <i class="menu-icon  fa fa-briefcase"></i>
+                                <span class="menu-text">线上JAR版本</span>
+                            </a>
+                        </li>
+                        <li id="heavy_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=heavy">
+                                <i class="menu-icon  fa fa-circle"></i>
+                                <span class="menu-text">重量访问排行</span>
+                            </a>
+                        </li>
+                        <li id="summary_report" >
+                            <a href="/cat/r/statistics?domain=${model.domain}&ip=${model.ipAddress}&date=${model.date}&op=summary">
+                                <i class="menu-icon  fa fa-lightbulb-o"></i>
+                                <span class="menu-text">告警智能分析</span>
+                            </a>
+                        </li>--%>
 					</ul>
-				</li> --%>
+				</li>
 				<%--<li id="System_report" class="hsub"><a href="#" class="dropdown-toggle"> <i class="menu-icon fa fa-gavel"></i> <span class="menu-text">System</span>--%>
 						<%--<b class="arrow fa fa-angle-down"></b>--%>
 				<%--</a> <b class="arrow"></b>--%>
