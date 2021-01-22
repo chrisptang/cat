@@ -21,13 +21,13 @@ package com.dianping.cat.servlet;
 import com.dianping.cat.Cat;
 import com.dianping.cat.CatConstants;
 import com.dianping.cat.configuration.client.entity.Server;
-import com.dianping.cat.status.http.HttpStats;
-import com.dianping.cat.util.Joiners;
-import com.dianping.cat.util.UrlParser;
 import com.dianping.cat.message.Message;
 import com.dianping.cat.message.Transaction;
 import com.dianping.cat.message.internal.DefaultMessageManager;
 import com.dianping.cat.message.internal.DefaultTransaction;
+import com.dianping.cat.status.http.HttpStats;
+import com.dianping.cat.util.Joiners;
+import com.dianping.cat.util.UrlParser;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -42,11 +42,15 @@ public class CatFilter implements Filter {
     private Set<String> excludeUrls;
     private Set<String> excludePrefixes;
 
-    private void customizeStatus(Transaction t, HttpServletRequest req) {
+    private void customizeStatus(Transaction t, HttpServletRequest req, HttpServletResponse response) {
         Object catStatus = req.getAttribute(CatConstants.CAT_STATE);
+
+        int responseStatus = response.getStatus();
 
         if (catStatus != null) {
             t.setStatus(catStatus.toString());
+        } else if (responseStatus != HttpServletResponse.SC_OK) {
+            t.setStatus("HTTP:" + responseStatus);
         } else {
             t.setStatus(Message.SUCCESS);
         }
@@ -229,7 +233,7 @@ public class CatFilter implements Filter {
         }
     }
 
-    private void logTransaction(FilterChain chain, HttpServletRequest req, HttpServletResponse response)
+    private void logTransaction(FilterChain chain, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Message message = Cat.getManager().getThreadLocalMessageTree().getMessage();
         boolean top = message == null;
@@ -242,25 +246,25 @@ public class CatFilter implements Filter {
 
         if (top) {
             type = CatConstants.TYPE_URL;
-            logTraceMode(req);
+            logTraceMode(request);
         } else {
             type = CatConstants.TYPE_URL_FORWARD;
         }
 
-        Transaction t = Cat.newTransaction(type, getRequestURI(req));
+        Transaction t = Cat.newTransaction(type, getRequestURI(request));
 
         try {
-            logPayload(req, top, type);
+            logPayload(request, top, type);
             logCatMessageId(res);
-            chain.doFilter(req, res);
-            customizeStatus(t, req);
+            chain.doFilter(request, res);
+            customizeStatus(t, request, response);
         } catch (ServletException e) {
             status = 500;
             t.setStatus(e);
             Cat.logError(e);
             throw e;
         } catch (IOException e) {
-        	status = 500;
+            status = 500;
             t.setStatus(e);
             Cat.logError(e);
             throw e;
@@ -270,7 +274,7 @@ public class CatFilter implements Filter {
             Cat.logError(e);
             throw new RuntimeException(e);
         } finally {
-            customizeUri(t, req);
+            customizeUri(t, request);
             t.complete();
 
             long end = System.currentTimeMillis();
