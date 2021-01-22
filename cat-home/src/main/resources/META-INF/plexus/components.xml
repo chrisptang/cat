@@ -427,6 +427,14 @@
 			<role>com.dianping.cat.alarm.spi.decorator.Decorator</role>
 			<role-hint>Transaction</role-hint>
 			<implementation>com.dianping.cat.report.alert.transaction.TransactionDecorator</implementation>
+			<requirements>
+				<requirement>
+					<role>com.dianping.cat.service.ProjectService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
+				</requirement>
+			</requirements>
 		</component>
 		<component>
 			<role>com.dianping.cat.report.alert.transaction.TransactionAlert</role>
@@ -550,6 +558,14 @@
 			<role>com.dianping.cat.alarm.spi.decorator.Decorator</role>
 			<role-hint>Event</role-hint>
 			<implementation>com.dianping.cat.report.alert.event.EventDecorator</implementation>
+			<requirements>
+				<requirement>
+					<role>com.dianping.cat.service.ProjectService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
+				</requirement>
+			</requirements>
 		</component>
 		<component>
 			<role>com.dianping.cat.report.alert.event.EventAlert</role>
@@ -1002,6 +1018,14 @@
 			<role>com.dianping.cat.alarm.spi.decorator.Decorator</role>
 			<role-hint>Heartbeat</role-hint>
 			<implementation>com.dianping.cat.report.alert.heartbeat.HeartbeatDecorator</implementation>
+			<requirements>
+				<requirement>
+					<role>com.dianping.cat.service.ProjectService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
+				</requirement>
+			</requirements>
 		</component>
 		<component>
 			<role>com.dianping.cat.report.alert.heartbeat.HeartbeatAlert</role>

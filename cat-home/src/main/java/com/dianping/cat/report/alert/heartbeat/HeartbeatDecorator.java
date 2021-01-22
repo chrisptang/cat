@@ -20,28 +20,37 @@ package com.dianping.cat.report.alert.heartbeat;
 
 import com.dianping.cat.alarm.spi.AlertEntity;
 import com.dianping.cat.alarm.spi.AlertType;
-import com.dianping.cat.alarm.spi.decorator.Decorator;
+import com.dianping.cat.alarm.spi.decorator.ProjectDecorator;
+import com.dianping.cat.report.alert.summary.AlertSummaryExecutor;
+import org.unidal.lookup.annotation.Inject;
 
-public class HeartbeatDecorator extends Decorator {
+public class HeartbeatDecorator extends ProjectDecorator {
 
-	public static final String ID = AlertType.HeartBeat.getName();
+    public static final String ID = AlertType.HeartBeat.getName();
 
-	@Override
-	public String generateContent(AlertEntity alert) {
-		return alert.getContent();
-	}
+    @Inject
+    private AlertSummaryExecutor m_executor;
 
-	@Override
-	public String generateTitle(AlertEntity alert) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[心跳告警] [项目: ").append(alert.getGroup()).append("][ip: ").append(alert.getParas().get("ip"))
-								.append("][指标: ").append(alert.getMetric()).append("]");
-		return sb.toString();
-	}
+    @Override
+    public String generateContent(AlertEntity alert) {
+        return alert.getContent() + "\n\n" + buildTemplatedContent(alert);
+    }
 
-	@Override
-	public String getId() {
-		return ID;
-	}
+    @Override
+    public String generateTitle(AlertEntity alert) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[心跳告警] [项目: ").append(alert.getGroup()).append("][ip: ").append(alert.getParas().get("ip"))
+                .append("][指标: ").append(alert.getMetric()).append("]");
+        return sb.toString();
+    }
 
+    @Override
+    public String getId() {
+        return ID;
+    }
+
+    @Override
+    protected String getTemplate() {
+        return "heartbeatAlert.ftl";
+    }
 }

@@ -18,15 +18,14 @@
  */
 package com.dianping.cat.report.alert.business;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.unidal.lookup.annotation.Inject;
-
 import com.dianping.cat.alarm.spi.AlertEntity;
 import com.dianping.cat.alarm.spi.AlertType;
 import com.dianping.cat.alarm.spi.decorator.ProjectDecorator;
 import com.dianping.cat.report.alert.summary.AlertSummaryExecutor;
+import org.unidal.lookup.annotation.Inject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class BusinessDecorator extends ProjectDecorator {
 
@@ -68,4 +67,8 @@ public class BusinessDecorator extends ProjectDecorator {
 		return ID;
 	}
 
+	@Override
+	protected String getTemplate() {
+		return "businessAlert.ftl";
+	}
 }

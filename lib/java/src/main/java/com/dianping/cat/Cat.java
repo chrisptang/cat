@@ -49,9 +49,9 @@ public class Cat {
     private static MessageProducer producer;
     private static MessageManager manager;
     private static int errorCount;
-    private static final Cat instance = new Cat();
+    private static final Cat CAT_INSTANCE = new Cat();
     private static volatile boolean init = false;
-    private static volatile boolean enabled = true;
+    private static volatile boolean enabled = false;
     private static volatile boolean JSTACK_ENABLED = true;
     private static volatile boolean MULTI_INSTANCES = false;
     private static volatile boolean DATASOURCE_MONITOR_ENABLED = true;
@@ -235,7 +235,7 @@ public class Cat {
     }
 
     public static Cat getInstance() {
-        return instance;
+        return CAT_INSTANCE;
     }
 
     public static MessageManager getManager() {
@@ -374,42 +374,44 @@ public class Cat {
     }
 
     private static void initializeInternal() {
+        if (init) {
+            return;
+        }
         validate();
 
-        if (isEnabled()) {
-            try {
+        if (!isEnabled()) {
+            return;
+        }
+
+        try {
+            synchronized (CAT_INSTANCE) {
                 if (!init) {
-                    synchronized (instance) {
-                        if (!init) {
-                            producer = DefaultMessageProducer.getInstance();
-                            manager = DefaultMessageManager.getInstance();
+                    producer = DefaultMessageProducer.getInstance();
+                    manager = DefaultMessageManager.getInstance();
 
-                            StatusUpdateTask heartbeatTask = new StatusUpdateTask();
-                            TcpSocketSender messageSender = TcpSocketSender.getInstance();
+                    StatusUpdateTask heartbeatTask = new StatusUpdateTask();
+                    TcpSocketSender messageSender = TcpSocketSender.getInstance();
 
-                            Threads.forGroup("cat").start(heartbeatTask);
-                            Threads.forGroup("cat").start(messageSender);
-                            Threads.forGroup("cat").start(new LocalAggregator.DataUploader());
+                    Threads.forGroup("cat").start(heartbeatTask);
+                    Threads.forGroup("cat").start(messageSender);
+                    Threads.forGroup("cat").start(new LocalAggregator.DataUploader());
 
-                            CatLogger.getInstance().info("Cat is lazy initialized!");
-                            init = true;
-                        }
-                    }
+                    CatLogger.getInstance().info("Cat is lazy initialized!");
+                    init = true;
                 }
-            } catch (Exception e) {
-                errorHandler(e);
-                disable();
             }
+        } catch (Exception e) {
+            errorHandler(e);
+            //发生错误的时候，不应该disable；
+            //  disable();
         }
     }
 
     private static void initializeInternal(ClientConfig config) {
-        if (isEnabled()) {
-            System.setProperty(Cat.CLIENT_CONFIG, config.toString());
-            CatLogger.getInstance().info("init cat with config:" + config.toString());
+        System.setProperty(Cat.CLIENT_CONFIG, config.toString());
+        CatLogger.getInstance().info("init cat with config:" + config.toString());
 
-            initializeInternal();
-        }
+        initializeInternal();
     }
 
     public static boolean isDataSourceMonitorEnabled() {
@@ -734,20 +736,24 @@ public class Cat {
     }
 
     private static void validate() {
-        String enable = Properties.forString().fromEnv().fromSystem().getProperty("CAT_ENABLED", "true");
+//        String enable = Properties.forString().fromEnv().fromSystem().getProperty("CAT_ENABLED", "true");
+//此处无须校验是否需要启动；
+//        if ("false".equals(enable)) {
 
-        if ("false".equals(enable)) {
-            CatLogger.getInstance().info("CAT is disable due to system environment CAT_ENABLED is false.");
+//            CatLogger.getInstance().info("CAT is disable due to system environment CAT_ENABLED is false.");
+//
+//            disable();
+//            return;
+//        } else {
+        String customDomain = getCustomDomain();
 
-            enabled = false;
-        } else {
-            String customDomain = getCustomDomain();
-
-            if (customDomain == null && UNKNOWN.equals(ApplicationEnvironment.loadAppName(UNKNOWN))) {
-                CatLogger.getInstance().info("CAT is disable due to no app name in resource file /META-INF/app.properties");
-                enabled = false;
-            }
+        if (customDomain == null && UNKNOWN.equals(ApplicationEnvironment.loadAppName(UNKNOWN))) {
+            CatLogger.getInstance().info("CAT is disable due to no app name in resource file /META-INF/app.properties");
+//            disable();
+            return;
         }
+//        }
+        enable();
     }
 
     private Cat() {
