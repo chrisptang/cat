@@ -61,7 +61,7 @@ public class HeartbeatComponentConfigurator extends AbstractResourceConfigurator
         all.add(C(Contactor.class, HeartbeatContactor.ID, HeartbeatContactor.class)
                 .req(ProjectService.class, AlertConfigManager.class));
         all.add(C(Decorator.class, HeartbeatDecorator.ID, HeartbeatDecorator.class)
-                .req(ProjectService.class, AlertSummaryExecutor.class));
+                .req(ProjectService.class));
 
         all.add(A(HeartbeatAlert.class));
 

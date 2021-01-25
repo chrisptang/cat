@@ -21,15 +21,10 @@ package com.dianping.cat.report.alert.heartbeat;
 import com.dianping.cat.alarm.spi.AlertEntity;
 import com.dianping.cat.alarm.spi.AlertType;
 import com.dianping.cat.alarm.spi.decorator.ProjectDecorator;
-import com.dianping.cat.report.alert.summary.AlertSummaryExecutor;
-import org.unidal.lookup.annotation.Inject;
 
 public class HeartbeatDecorator extends ProjectDecorator {
 
     public static final String ID = AlertType.HeartBeat.getName();
-
-    @Inject
-    private AlertSummaryExecutor m_executor;
 
     @Override
     public String generateContent(AlertEntity alert) {

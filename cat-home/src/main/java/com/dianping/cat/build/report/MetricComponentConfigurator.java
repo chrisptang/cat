@@ -56,6 +56,8 @@ public class MetricComponentConfigurator extends AbstractResourceConfigurator {
 
         all.add(A(DataExtractorImpl.class));
 
+        all.add(A(BusinessAlert.class));
+
         all.add(A(BusinessReportGroupService.class));
 
         all.add(A(LocalBusinessService.class));
@@ -77,8 +79,6 @@ public class MetricComponentConfigurator extends AbstractResourceConfigurator {
 
         all.add(C(Decorator.class, BusinessDecorator.ID, BusinessDecorator.class)
                 .req(ProjectService.class, AlertSummaryExecutor.class));
-
-        all.add(A(BusinessAlert.class));
 
         return all;
     }

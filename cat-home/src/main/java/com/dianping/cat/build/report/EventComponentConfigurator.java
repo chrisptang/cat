@@ -27,7 +27,6 @@ import com.dianping.cat.report.alert.event.EventAlert;
 import com.dianping.cat.report.alert.event.EventContactor;
 import com.dianping.cat.report.alert.event.EventDecorator;
 import com.dianping.cat.report.alert.event.EventRuleConfigManager;
-import com.dianping.cat.report.alert.summary.AlertSummaryExecutor;
 import com.dianping.cat.report.page.event.service.CompositeEventService;
 import com.dianping.cat.report.page.event.service.EventReportService;
 import com.dianping.cat.report.page.event.service.HistoricalEventService;
@@ -52,7 +51,7 @@ public class EventComponentConfigurator extends AbstractResourceConfigurator {
         all.add(C(Contactor.class, EventContactor.ID, EventContactor.class)
                 .req(ProjectService.class, AlertConfigManager.class));
         all.add(C(Decorator.class, EventDecorator.ID, EventDecorator.class)
-                .req(ProjectService.class, AlertSummaryExecutor.class));
+                .req(ProjectService.class));
         all.add(A(EventAlert.class));
 
         all.add(A(EventReportService.class));

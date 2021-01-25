@@ -431,9 +431,6 @@
 				<requirement>
 					<role>com.dianping.cat.service.ProjectService</role>
 				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
-				</requirement>
 			</requirements>
 		</component>
 		<component>
@@ -561,9 +558,6 @@
 			<requirements>
 				<requirement>
 					<role>com.dianping.cat.service.ProjectService</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
 				</requirement>
 			</requirements>
 		</component>
@@ -728,6 +722,45 @@
 			<implementation>com.dianping.cat.report.graph.metric.impl.DataExtractorImpl</implementation>
 		</component>
 		<component>
+			<role>com.dianping.cat.report.alert.business.BusinessAlert</role>
+			<implementation>com.dianping.cat.report.alert.business.BusinessAlert</implementation>
+			<requirements>
+				<requirement>
+					<role>com.dianping.cat.report.alert.config.BaseRuleHelper</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.alert.business.BusinessRuleConfigManager</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.config.business.BusinessConfigManager</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.system.page.business.config.BusinessTagConfigManager</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.alert.business.BusinessReportGroupService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.service.ProjectService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.alarm.spi.AlertManager</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.page.business.task.BusinessKeyHelper</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.page.metric.service.BaselineService</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.alarm.spi.rule.DataChecker</role>
+				</requirement>
+				<requirement>
+					<role>com.dianping.cat.report.page.business.graph.CustomDataCalculator</role>
+				</requirement>
+			</requirements>
+		</component>
+		<component>
 			<role>com.dianping.cat.report.alert.business.BusinessReportGroupService</role>
 			<implementation>com.dianping.cat.report.alert.business.BusinessReportGroupService</implementation>
 			<requirements>
@@ -866,45 +899,6 @@
 			</requirements>
 		</component>
 		<component>
-			<role>com.dianping.cat.report.alert.business.BusinessAlert</role>
-			<implementation>com.dianping.cat.report.alert.business.BusinessAlert</implementation>
-			<requirements>
-				<requirement>
-					<role>com.dianping.cat.report.alert.config.BaseRuleHelper</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.alert.business.BusinessRuleConfigManager</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.config.business.BusinessConfigManager</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.system.page.business.config.BusinessTagConfigManager</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.alert.business.BusinessReportGroupService</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.service.ProjectService</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.alarm.spi.AlertManager</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.page.business.task.BusinessKeyHelper</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.page.metric.service.BaselineService</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.alarm.spi.rule.DataChecker</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.page.business.graph.CustomDataCalculator</role>
-				</requirement>
-			</requirements>
-		</component>
-		<component>
 			<role>com.dianping.cat.report.alert.heartbeat.HeartbeatRuleConfigManager</role>
 			<implementation>com.dianping.cat.report.alert.heartbeat.HeartbeatRuleConfigManager</implementation>
 			<requirements>
@@ -1021,9 +1015,6 @@
 			<requirements>
 				<requirement>
 					<role>com.dianping.cat.service.ProjectService</role>
-				</requirement>
-				<requirement>
-					<role>com.dianping.cat.report.alert.summary.AlertSummaryExecutor</role>
 				</requirement>
 			</requirements>
 		</component>

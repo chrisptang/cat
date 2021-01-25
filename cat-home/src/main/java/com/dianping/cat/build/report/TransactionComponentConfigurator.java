@@ -55,7 +55,7 @@ public class TransactionComponentConfigurator extends AbstractResourceConfigurat
         all.add(C(Contactor.class, TransactionContactor.ID, TransactionContactor.class)
                 .req(ProjectService.class, AlertConfigManager.class));
         all.add(C(Decorator.class, TransactionDecorator.ID, TransactionDecorator.class)
-                .req(ProjectService.class, AlertSummaryExecutor.class));
+                .req(ProjectService.class));
         all.add(A(TransactionAlert.class));
 
         all.add(A(LocalTransactionService.class));
