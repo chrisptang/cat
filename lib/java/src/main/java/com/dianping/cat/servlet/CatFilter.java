@@ -49,7 +49,8 @@ public class CatFilter implements Filter {
 
         if (catStatus != null) {
             t.setStatus(catStatus.toString());
-        } else if (responseStatus != HttpServletResponse.SC_OK) {
+        } else if (responseStatus >= HttpServletResponse.SC_BAD_REQUEST) {
+            // 对于 4xx和5xx的请求，作为错误记录下来；
             t.setStatus("HTTP:" + responseStatus);
         } else {
             t.setStatus(Message.SUCCESS);
