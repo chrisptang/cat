@@ -28,7 +28,7 @@ public class HeartbeatDecorator extends ProjectDecorator {
 
     @Override
     public String generateContent(AlertEntity alert) {
-        return alert.getContent() + "\n\n" + buildTemplatedContent(alert);
+        return buildTemplatedContent(alert);
     }
 
     @Override

@@ -29,46 +29,43 @@ import java.util.Date;
 
 public class BusinessDecorator extends ProjectDecorator {
 
-	public static final String ID = AlertType.Business.getName();
+    public static final String ID = AlertType.Business.getName();
 
-	@Inject
-	private AlertSummaryExecutor m_executor;
+    @Inject
+    private AlertSummaryExecutor m_executor;
 
-	@Override
-	public String generateContent(AlertEntity alert) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(alert.getDate());
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		Date alertDate = cal.getTime();
+    @Override
+    public String generateContent(AlertEntity alert) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(alert.getDate());
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date alertDate = cal.getTime();
 
-		StringBuilder sb = new StringBuilder();
-		sb.append(alert.getContent());
-		sb.append(buildContactInfo(alert.getDomain()));
+        StringBuilder sb = new StringBuilder(buildTemplatedContent(alert));
+        String summaryContext = m_executor.execute(alert.getDomain(), alertDate);
+        if (summaryContext != null) {
+            sb.append("<br/>").append(summaryContext);
+        }
 
-		String summaryContext = m_executor.execute(alert.getDomain(), alertDate);
-		if (summaryContext != null) {
-			sb.append("<br/>").append(summaryContext);
-		}
+        return sb.toString();
+    }
 
-		return sb.toString();
-	}
+    @Override
+    public String generateTitle(AlertEntity alert) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[").append(alert.getDomain()).append(" 业务告警]");
+        sb.append("[业务指标 ").append(alert.getMetric()).append("]");
+        return sb.toString();
+    }
 
-	@Override
-	public String generateTitle(AlertEntity alert) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[业务告警] [应用名 ").append(alert.getDomain()).append("]");
-		sb.append("[业务指标 ").append(alert.getMetric()).append("]");
-		return sb.toString();
-	}
+    @Override
+    public String getId() {
+        return ID;
+    }
 
-	@Override
-	public String getId() {
-		return ID;
-	}
-
-	@Override
-	protected String getTemplate() {
-		return "businessAlert.ftl";
-	}
+    @Override
+    protected String getTemplate() {
+        return "businessAlert.ftl";
+    }
 }
