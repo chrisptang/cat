@@ -65,7 +65,7 @@ public abstract class ProjectDecorator extends Decorator implements Initializabl
     protected final String buildTemplatedContent(AlertEntity alert) {
         try {
             StringWriter sw = new StringWriter(5000);
-            Map<Object, Object> dataMap = generateExceptionMap(alert);
+            Map<Object, Object> dataMap = generateAlertTemplateInfoMap(alert);
             Template t = m_configuration.getTemplate(getTemplate());
             t.process(dataMap, sw);
             return sw.toString();
@@ -100,13 +100,14 @@ public abstract class ProjectDecorator extends Decorator implements Initializabl
         return "";
     }
 
-    protected final Map<Object, Object> generateExceptionMap(AlertEntity alert) {
+    protected final Map<Object, Object> generateAlertTemplateInfoMap(AlertEntity alert) {
         String domain = alert.getGroup();
         String contactInfo = buildContactInfo(domain);
         Map<Object, Object> map = new HashMap<Object, Object>();
 
         map.put("domain", domain);
         map.put("content", alert.getContent());
+        map.put("level", alert.getLevel().getLevel());
         map.put("date", m_format.format(alert.getDate()));
         map.put("linkDate", M_LINK_FORMAT.format(alert.getDate()));
         map.put("contactInfo", contactInfo);

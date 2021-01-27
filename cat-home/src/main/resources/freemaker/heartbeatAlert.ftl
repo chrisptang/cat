@@ -1,5 +1,7 @@
+[${domain} 心跳告警]
+${content} [告警时间: ${date}] [告警级别: ${level}]
 
 http://${catWebServer}/cat/r/h?domain=${domain}&date=${linkDate}
-点击以上链接查看详情[CAT ${domain} 心跳告警]
+(请点击以上链接查看详情)
 
 ${contactInfo}

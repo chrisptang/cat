@@ -1,7 +1,7 @@
-[CAT异常告警]
-[项目: ${domain}] : ${content}[时间: ${date}]
+[${domain} 异常告警]
+${content} [告警时间: ${date}] [告警级别: ${level}]
 
 http://${catWebServer}/cat/r/p?domain=${domain}&date=${linkDate}
-点击以上链接查看详情
+(请点击以上链接查看详情)
 
 ${contactInfo}

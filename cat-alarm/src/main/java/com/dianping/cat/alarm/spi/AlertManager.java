@@ -174,7 +174,7 @@ public class AlertManager implements Initializable {
                 String rawContent = pair.getValue();
 
                 if (suspendMinute > 0) {
-                    rawContent = rawContent + "<br/>[告警间隔时间]" + suspendMinute + "分钟";
+                    rawContent = rawContent + "<br/>[告警间隔时间 " + suspendMinute + "分钟]";
                 }
                 String content = m_splitterManager.process(rawContent, channel);
                 message = new SendMessageEntity(group, title, type, content, receivers);
@@ -201,10 +201,19 @@ public class AlertManager implements Initializable {
         String group = alert.getGroup();
         String level = alert.getLevel().getLevel();
         List<AlertChannel> channels = m_policyManager.queryChannels(type, group, level);
+        if (null == channels || channels.size() <= 0) {
+            Cat.logError(new Exception(String.format("Could not find any alert channel for: %s,%s,%s", type, group, level)));
+            return false;
+        }
+
+        String title = String.format("[%s %s 已恢复]", group, alterType.getTitle());
+        String content = String.format("[应用 %s %s 已恢复][恢复时间 %s][指标 %s][告警级别 %s]"
+                , group, alterType.getTitle(), currentMinute, alert.getMetric(), level);
+
+        boolean isSuccess = true;
 
         for (AlertChannel channel : channels) {
-            String title = "[告警恢复] [告警类型 " + alterType.getTitle() + "][" + group + " " + alert.getMetric() + "]";
-            String content = "[告警已恢复][恢复时间]" + currentMinute;
+
             List<String> receivers = m_contactorManager.queryReceivers(alert.getContactGroup(), channel, type);
             //去重
             removeDuplicate(receivers);
@@ -212,13 +221,11 @@ public class AlertManager implements Initializable {
             if (!channel.isNeedReceivers() || receivers.size() > 0) {
                 SendMessageEntity message = new SendMessageEntity(group, title, type, content, receivers);
 
-                if (m_senderManager.sendAlert(channel, message)) {
-                    return true;
-                }
+                isSuccess = m_senderManager.sendAlert(channel, message) && isSuccess;
             }
         }
 
-        return false;
+        return isSuccess;
     }
 
     private class RecoveryAnnouncer implements Task {
