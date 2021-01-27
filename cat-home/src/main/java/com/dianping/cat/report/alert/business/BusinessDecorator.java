@@ -45,7 +45,7 @@ public class BusinessDecorator extends ProjectDecorator {
         StringBuilder sb = new StringBuilder(buildTemplatedContent(alert));
         String summaryContext = m_executor.execute(alert.getDomain(), alertDate);
         if (summaryContext != null) {
-            sb.append("<br/>").append(summaryContext);
+            sb.append("\n").append(summaryContext);
         }
 
         return sb.toString();

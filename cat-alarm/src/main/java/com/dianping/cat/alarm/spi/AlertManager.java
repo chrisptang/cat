@@ -174,7 +174,7 @@ public class AlertManager implements Initializable {
                 String rawContent = pair.getValue();
 
                 if (suspendMinute > 0) {
-                    rawContent = rawContent + "<br/>[告警间隔时间 " + suspendMinute + "分钟]";
+                    rawContent = rawContent + "\n[告警间隔时间 " + suspendMinute + "分钟]";
                 }
                 String content = m_splitterManager.process(rawContent, channel);
                 message = new SendMessageEntity(group, title, type, content, receivers);

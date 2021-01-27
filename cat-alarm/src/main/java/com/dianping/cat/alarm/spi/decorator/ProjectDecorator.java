@@ -107,6 +107,7 @@ public abstract class ProjectDecorator extends Decorator implements Initializabl
 
         map.put("domain", domain);
         map.put("content", alert.getContent());
+        map.put("metric", alert.getMetric());
         map.put("level", alert.getLevel().getLevel());
         map.put("date", m_format.format(alert.getDate()));
         map.put("linkDate", M_LINK_FORMAT.format(alert.getDate()));
