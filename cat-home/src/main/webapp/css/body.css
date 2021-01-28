@@ -236,6 +236,9 @@ a{
 table{
 	margin-top:3px;
 }
+#alert-minutes table.smallTable{
+    margin-right:5px;
+}
 .editor {
      left: 0;
      width: 100%;

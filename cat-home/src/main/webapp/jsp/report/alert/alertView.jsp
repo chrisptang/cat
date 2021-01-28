@@ -65,7 +65,10 @@
 		 		<c:forEach var="minuteEntry" items="${model.alertMinutes}"  varStatus="itemStatus">
 				      <table class="smallTable" style="float:left" border=1>  
 				           <tr><th colspan="2" class="text-danger">${minuteEntry.key}</th></tr>
-				           <tr><th>项目名</th><th>个</th></tr>
+				           <tr>
+				           <th>项目名</th>
+				           <th>告警数量</th>
+				           </tr>
 				           <c:set var="length" value="${fn:length(minuteEntry.value.alertDomains)}" />
 				           <c:forEach var="alertDomain" items="${minuteEntry.value.alertDomains}" end="${count-1}">
 				              <tr>
