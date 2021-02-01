@@ -29,7 +29,7 @@ import com.dianping.cat.consumer.transaction.model.transform.DefaultNativeParser
 import com.dianping.cat.consumer.transaction.model.transform.DefaultSaxParser;
 import com.dianping.cat.report.ReportDelegate;
 import com.dianping.cat.task.TaskManager;
-import com.dianping.cat.task.TaskManager.TaskProlicy;
+import com.dianping.cat.task.TaskManager.TaskPolicy;
 import org.unidal.lookup.annotation.Inject;
 import org.unidal.lookup.annotation.Named;
 
@@ -86,7 +86,7 @@ public class TransactionDelegate implements ReportDelegate<TransactionReport> {
 
 		if (domain.equals(Constants.ALL) || m_configManager.validateDomain(domain)) {
 			return m_taskManager.createTask(report.getStartTime(), domain, TransactionAnalyzer.ID,
-			      TaskProlicy.ALL_EXCLUED_HOURLY);
+			      TaskPolicy.ALL_EXCEPT_HOURLY);
 		} else {
 			return true;
 		}

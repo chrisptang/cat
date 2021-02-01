@@ -26,7 +26,7 @@ import com.dianping.cat.consumer.problem.model.transform.DefaultNativeParser;
 import com.dianping.cat.consumer.problem.model.transform.DefaultSaxParser;
 import com.dianping.cat.report.ReportDelegate;
 import com.dianping.cat.task.TaskManager;
-import com.dianping.cat.task.TaskManager.TaskProlicy;
+import com.dianping.cat.task.TaskManager.TaskPolicy;
 import org.unidal.lookup.annotation.Inject;
 import org.unidal.lookup.annotation.Named;
 
@@ -77,7 +77,7 @@ public class ProblemDelegate implements ReportDelegate<ProblemReport> {
 		String domain = report.getDomain();
 
 		if (m_configManager.validateDomain(domain)) {
-			return m_taskManager.createTask(report.getStartTime(), domain, ProblemAnalyzer.ID,	TaskProlicy.ALL_EXCLUED_HOURLY);
+			return m_taskManager.createTask(report.getStartTime(), domain, ProblemAnalyzer.ID,	TaskPolicy.ALL_EXCEPT_HOURLY);
 		} else {
 			return true;
 		}

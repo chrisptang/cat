@@ -273,6 +273,94 @@ function parseMetricLineData(data) {
 	return res;
 }
 
+function graphMetricChartExporting(container, data) {
+	Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
+	var ylabelMin = data.minYlabel;
+	var _data = parseMetricLineData(data);
+	return Highcharts.chart(container, {
+		chart: {
+			type: 'spline'
+		},
+		title: {
+			text: data.htmlTitle,
+			useHTML: true
+		},
+		xAxis: {
+			type: 'datetime',
+			dateTimeLabelFormats: {
+				second: '%H:%M:%S',
+				minute: '%H:%M',
+				hour: '%H:%M',
+				day: '%m-%d',
+				week: '%Y-%m-%d',
+				month: '%m-%d',
+				year: '%Y-%m'
+			},
+		},
+		yAxis: {
+			min: ylabelMin,
+			title: {
+				text: data.unit,
+			},
+			labels: {
+				enabled: data.yEnabled
+			}
+		},
+		credits: {
+			enabled: false
+		},
+		plotOptions: {
+			spline: {
+				lineWidth: 2,
+				states: {
+					hover: {
+						lineWidth: 2
+					}
+				},
+				marker: {
+					enabled: false
+				}
+			}
+		},
+		legend: {
+			maxHeight: 82
+		},
+		tooltip: {
+			allowPointSelect: false,
+			formatter: function() {
+				var number0 = Number(this.y).toFixed(0);
+				var number1 = Number(this.y).toFixed(1);
+				var number = number1;
+
+				if (Number(number1) == Number(number0)) {
+					number = number0;
+				}
+
+				if (data.yEnabled) {
+					return Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x) +
+						'<br/>[' + this.series.name + '] ' + '<b>' +
+						number + '</b>';
+				} else {
+					return Highcharts.dateFormat('%Y-%m-%d %H:%M', this.x);
+				}
+
+			}
+		},
+		exporting: {
+			buttons: {
+				contextButton: {
+					menuItems: ["viewFullscreen", "printChart", "separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG"]
+				}
+			}
+		},
+		series: _data
+	});
+}
+
 function graphMetricChart(container, data) {
 	Highcharts.setOptions({
 		global : {

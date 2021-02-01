@@ -25,7 +25,7 @@ import com.dianping.cat.consumer.heartbeat.model.transform.DefaultNativeParser;
 import com.dianping.cat.consumer.heartbeat.model.transform.DefaultSaxParser;
 import com.dianping.cat.report.ReportDelegate;
 import com.dianping.cat.task.TaskManager;
-import com.dianping.cat.task.TaskManager.TaskProlicy;
+import com.dianping.cat.task.TaskManager.TaskPolicy;
 import org.unidal.lookup.annotation.Inject;
 import org.unidal.lookup.annotation.Named;
 
@@ -64,7 +64,7 @@ public class HeartbeatDelegate implements ReportDelegate<HeartbeatReport> {
 		String domain = report.getDomain();
 
 		if (m_manager.validateDomain(domain)) {
-			return m_taskManager.createTask(report.getStartTime(), domain, HeartbeatAnalyzer.ID, TaskProlicy.DAILY);
+			return m_taskManager.createTask(report.getStartTime(), domain, HeartbeatAnalyzer.ID, TaskPolicy.DAILY);
 		} else {
 			return true;
 		}

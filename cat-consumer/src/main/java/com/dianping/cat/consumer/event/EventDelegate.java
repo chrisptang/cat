@@ -30,7 +30,7 @@ import com.dianping.cat.consumer.event.model.transform.DefaultNativeParser;
 import com.dianping.cat.consumer.event.model.transform.DefaultSaxParser;
 import com.dianping.cat.report.ReportDelegate;
 import com.dianping.cat.task.TaskManager;
-import com.dianping.cat.task.TaskManager.TaskProlicy;
+import com.dianping.cat.task.TaskManager.TaskPolicy;
 import org.unidal.lookup.annotation.Inject;
 import org.unidal.lookup.annotation.Named;
 
@@ -116,7 +116,7 @@ public class EventDelegate implements ReportDelegate<EventReport> {
 		String domain = report.getDomain();
 
 		if (domain.equals(Constants.ALL) || m_configManager.validateDomain(domain)) {
-			return m_taskManager.createTask(report.getStartTime(), domain, EventAnalyzer.ID, TaskProlicy.ALL_EXCLUED_HOURLY);
+			return m_taskManager.createTask(report.getStartTime(), domain, EventAnalyzer.ID, TaskPolicy.ALL_EXCEPT_HOURLY);
 		} else {
 			return true;
 		}

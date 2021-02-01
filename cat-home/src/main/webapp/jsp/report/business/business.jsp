@@ -107,10 +107,10 @@
 							$('#search').val(domain);
 						}
 					}
-								
+					window._businessCharts={};
 					<c:forEach var="item" items="${model.lineCharts}" varStatus="status">
 						var data = ${item.jsonString};
-						graphMetricChart(document.getElementById('${item.id}'), data);
+						window._businessCharts['${item.id}'] = graphMetricChartExporting('${item.id}', data);
 					</c:forEach>
 				
 			});
