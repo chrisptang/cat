@@ -9,7 +9,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta charset="utf-8">
 	<title>CAT</title>
-	<meta name="description" content="Restyling jQuery UI Widgets and Elements">
+	<meta name="description" content="CAT Java应用监控，监控应用的CPU/内存/磁盘/事件等，支持自定义告警">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="${model.webapp}/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${model.webapp}/assets/css/font-awesome.min.css">
