@@ -115,9 +115,9 @@
 				
 			});
 	</script>
-		<div class="breadcrumbs" id="breadcrumbs" style="display:flex;flex-flow: wrap;">
+		<div class="breadcrumbs" id="breadcrumbs" style="display:flex;flex-flow: wrap;justify-content: space-between;">
 		    <div class="nav-block">
-		        <span class="nav-label">时间窗口</span>
+		        <span class="nav-label">时间窗口：</span>
                 <c:forEach var="range" items="${model.allRange}">
                     <c:choose>
                         <c:when test="${payload.timeRange eq range.duration}">
@@ -130,12 +130,14 @@
                 </c:forEach>
             </div>
 			<!-- #section:basics/content.searchbox -->
-			<div class="nav-search nav-block nav" id="nav-search">
+			<div class="nav-search nav-block nav" id="nav-search" style="position: initial;line-height: 40px;">
+			    <span class="nav-label">时刻：</span>
 				<c:forEach var="nav" items="${model.navs}">
 					<span class="nav-label">[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}&step=${nav.hours}&timeRange=${payload.timeRange}">${nav.title}</a> ]</span>
 				</c:forEach>
 				<span class="nav-label">[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&timeRange=${payload.timeRange}">now</a> ]</span>
 			</div>
+		</div>
 	<table>
 		<tr>
 			<th class="left">
