@@ -75,7 +75,7 @@
 	</tr>
 </table>
 
-<table class="table table-hover table-striped table-condensed" style="width:100%">
+<table class="table table-hover table-striped table-condensed" style="width:100%;white-space: nowrap;background-color: #fff;">
 	<tr>
 		<th width="7%">Type</th>
 		<th width="4%">Total</th>

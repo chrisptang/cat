@@ -59,7 +59,7 @@
 		</th>
 	</tr>
 </table>
-<table class='table table-hover table-striped table-condensed ' style="width:100%;">
+<table class='table table-hover table-striped table-condensed' style="width:100%;white-space: nowrap;background-color: #fff;">
 	<c:choose>
 		<c:when test="${empty payload.type}">
 			<tr>
