@@ -75,7 +75,7 @@
 				<c:set var="lastIndex" value="${status.index}" />
 				<tr class="right">
 					<td class="left">
-						<a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&sort=type"><a href="?op=graphs&domain=${model.domain}&date=${model.date}&type=${item.type}&ip=${model.ipAddress}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
+						<a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&sort=type"><a href="?op=graphs&sort=total&domain=${model.domain}&date=${model.date}&type=${item.type}&ip=${model.ipAddress}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
 						&nbsp;&nbsp;<a href="?domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${item.type}">${item.detail.id}</a>
 					</td>
 					<td>${w:format(e.totalCount,'#,###,###,###,##0')}</td>
@@ -92,7 +92,7 @@
 		</c:when>
 		<c:otherwise>
 			<tr>
-			<th class="left"><a href="?op=graphs&domain=${model.domain}&date=${model.date}&type=${payload.encodedType}&ip=${model.ipAddress}" class="graph_link" data-status="-1">[:: show ::]</a>
+			<th class="left"><a href="?op=graphs&sort=total&domain=${model.domain}&date=${model.date}&type=${payload.encodedType}&ip=${model.ipAddress}" class="graph_link" data-status="-1">[:: show ::]</a>
 			<a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.type}&sort=type"> Name</a></th>
 			<th class="right"><a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&sort=total">Total</a></th>
 			<th class="right"><a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&sort=failure">Failure</a></th>
@@ -109,7 +109,7 @@
 					<td class="left">
 					<c:choose>
 					<c:when test="${status.index > 0}">
-						<a	href="?op=graphs&domain=${report.domain}&ip=${model.ipAddress}&date=${model.date}&type=${payload.encodedType}&name=${item.name}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
+						<a href="?op=graphs&sort=total&domain=${report.domain}&ip=${model.ipAddress}&date=${model.date}&type=${payload.encodedType}&name=${item.name}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
 					</c:when>
 					</c:choose>
 					&nbsp;&nbsp;${e.id}

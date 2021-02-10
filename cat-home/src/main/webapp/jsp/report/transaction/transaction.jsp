@@ -77,7 +77,7 @@
 				<c:set var="e" value="${item.detail}"/>
 				<c:set var="lastIndex" value="${status.index}"/>
 				<tr class=" right">
-					<td class="left"><a href="?op=graphs&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${item.type}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
+					<td class="left"><a href="?op=graphs&sort=total&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${item.type}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
 					&nbsp;&nbsp;<a href="?domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${item.type}"> ${item.detail.id}</a></td>
 					<td>${w:format(e.totalCount,'#,###,###,###,##0')}</td>
 					<td>${w:format(e.failCount,'#,###,###,###,##0')}</td>
@@ -101,7 +101,7 @@
 			支持多个字符串查询，例如sql|url|task，查询结果为包含任一sql、url、task的列。
 			</th></tr>
 			<tr>
-			<th  style="text-align: left;"><a href="?op=graphs&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}" class="graph_link" data-status="-1">[:: show ::]</a>
+			<th  style="text-align: left;"><a href="?op=graphs&sort=total&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}" class="graph_link" data-status="-1">[:: show ::]</a>
 			<a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&sort=type&queryname=${model.queryName}">Name</a></th>
 			<th class="right"><a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&sort=total&queryname=${model.queryName}">Total</a></th>
 			<th class="right"><a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&sort=failure&queryname=${model.queryName}">Failure</a></th>
@@ -123,7 +123,7 @@
 					<c:choose>
 						<c:when test="${status.index > 0}">
 							<td class="left longText" style="white-space:normal;word-break: normal;">
-							<a href="?op=graphs&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&name=${item.name}" class="graph_link" data-status="${status.index}">[:: show ::]</a> 
+							<a href="?op=graphs&sort=total&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&name=${item.name}" class="graph_link" data-status="${status.index}">[:: show ::]</a>
 							&nbsp;&nbsp;${w:shorten(e.id, 120)}</td>
 						</c:when>
 						<c:otherwise>
