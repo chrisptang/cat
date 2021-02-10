@@ -115,25 +115,27 @@
 				
 			});
 	</script>
-		<div class="breadcrumbs" id="breadcrumbs">
-		&nbsp;&nbsp;时间段 
-					<c:forEach var="range" items="${model.allRange}">
-						<c:choose>
-							<c:when test="${payload.timeRange eq range.duration}">
-								&nbsp;&nbsp;&nbsp;[ <a href="?op=view&name=${payload.name}&type=${payload.type}&timeRange=${range.duration}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}" class="current">${range.title}</a> ]
-							</c:when>
-							<c:otherwise>
-								&nbsp;&nbsp;&nbsp;[ <a href="?op=view&name=${payload.name}&type=${payload.type}&timeRange=${range.duration}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}">${range.title}</a> ]
-							</c:otherwise>
-							</c:choose>
-					</c:forEach>
+		<div class="breadcrumbs" id="breadcrumbs" style="display:flex;flex-flow: wrap;">
+		    <div class="nav-block">
+		        <span class="nav-label">时间窗口</span>
+                <c:forEach var="range" items="${model.allRange}">
+                    <c:choose>
+                        <c:when test="${payload.timeRange eq range.duration}">
+                            <span class="nav-label">[ <a href="?op=view&name=${payload.name}&type=${payload.type}&timeRange=${range.duration}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}" class="current">${range.title}</a> ]</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="nav-label">[ <a href="?op=view&name=${payload.name}&type=${payload.type}&timeRange=${range.duration}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}">${range.title}</a> ]</span>
+                        </c:otherwise>
+                        </c:choose>
+                </c:forEach>
+            </div>
 			<!-- #section:basics/content.searchbox -->
-			<div class="nav-search nav" id="nav-search">
+			<div class="nav-search nav-block nav" id="nav-search">
 				<c:forEach var="nav" items="${model.navs}">
-					&nbsp;[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}&step=${nav.hours}&timeRange=${payload.timeRange}">${nav.title}</a> ]&nbsp;
+					<span class="nav-label">[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&endDate=${w:format(model.endTime,'yyyy-MM-dd HH:mm')}&step=${nav.hours}&timeRange=${payload.timeRange}">${nav.title}</a> ]</span>
 				</c:forEach>
-				&nbsp;[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&timeRange=${payload.timeRange}">now</a> ]&nbsp;
-			</div></div>
+				<span class="nav-label">[ <a href="${model.baseUri}?op=view&name=${payload.name}&type=${payload.type}&timeRange=${payload.timeRange}">now</a> ]</span>
+			</div>
 	<table>
 		<tr>
 			<th class="left">
