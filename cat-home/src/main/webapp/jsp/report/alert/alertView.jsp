@@ -35,7 +35,7 @@
 				  <input class="type" type="checkbox" value="exception"> 异常告警
 				</label><label class="btn btn-info btn-sm">
 				  <input class="type" type="checkbox" value="heartbeat"> 心跳告警
-				</label><label class="btn btn-info btn-sm">
+				</label><!--disabled by derrick.tangp <label class="btn btn-info btn-sm">
 				  <input class="type" type="checkbox" value="thirdParty"> 第三方告警
 				</label><label class="btn btn-info btn-sm">
 				  <input class="type" type="checkbox" value="frontEnd"> 前端告警
@@ -47,7 +47,7 @@
 				  <input class="type" type="checkbox" value="zabbix"> Zabbix告警
 				</label><label class="btn btn-info btn-sm">
 				  <input class="type" type="checkbox" value="database"> DB告警
-				</label><label class="btn btn-info btn-sm">
+				</label>--><label class="btn btn-info btn-sm">
 				  <input class="type" type="checkbox" value="transaction"> Transaction告警
 				</label>
 			</div>

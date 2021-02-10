@@ -73,13 +73,13 @@
 					<button class="btn btn-inverse btn-sm" id="nav_config">
 						<i class="ace-icon fa fa-cogs"></i>Configs
 					</button>
-					<button class="btn btn-yellow btn-sm" id="nav_document">
+					<button class="btn btn-yellow btn-sm" id="nav_document" style="display:none;">
 						<i class="ace-icon fa fa-cogs"></i>Documents
 					</button>
 					</i>
 				</div>
 				<!-- #section:basics/navbar.dropdown -->
-				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+				<div class="navbar-buttons navbar-header pull-right" role="navigation" style="display:none;">
 				<ul class="nav ace-nav" style="height:auto;">
 					<li class="light-blue">
 						<a href="http://github.com/dianping/cat/" target="_blank">

@@ -57,7 +57,7 @@
 		</th>
 	</tr>
 </table>
-<table class='table table-striped table-condensed table-hover '  style="width:100%;">
+<table class='table table-striped table-condensed table-hover' style="width:100%;white-space: nowrap;background-color: #fff;">
 	<c:choose>
 		<c:when test="${empty payload.type}">
 			<tr><th class="left"><a href="?domain=${model.domain}&date=${model.date}&ip=${model.ipAddress}&sort=type">Type</a></th>
@@ -122,7 +122,7 @@
 				<tr class=" right">
 					<c:choose>
 						<c:when test="${status.index > 0}">
-							<td class="left longText" style="white-space:normal">
+							<td class="left longText" style="white-space:normal;word-break: normal;">
 							<a href="?op=graphs&domain=${report.domain}&date=${model.date}&ip=${model.ipAddress}&type=${payload.encodedType}&name=${item.name}" class="graph_link" data-status="${status.index}">[:: show ::]</a> 
 							&nbsp;&nbsp;${w:shorten(e.id, 120)}</td>
 						</c:when>
