@@ -24,7 +24,7 @@
 		<idle-timeout>10m</idle-timeout>
 		<statement-cache-size>1000</statement-cache-size>
 		<properties>
-			<driver>com.mysql.jdbc.Driver</driver>
+			<driver>com.mysql.cj.jdbc.Driver</driver>
 			<url><![CDATA[{jdbc.url}]]></url>
 			<user>{jdbc.user}</user>
 			<password>{jdbc.password}</password>

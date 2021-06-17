@@ -18,6 +18,8 @@
  */
 package com.dianping.cat.configuration;
 
+import com.dianping.cat.util.StringUtils;
+
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,16 @@ public enum NetworkInterfaceManager {
     public final static String LOOPBACK = "127.0.0.1";
 
     NetworkInterfaceManager() {
+        if (StringUtils.isNotEmpty(System.getenv("SERVER_IP"))) {
+            ip = System.getenv("SERVER_IP");
+            if (StringUtils.isNotEmpty(System.getenv("SERVER_NAME"))) {
+                hostName = System.getenv("SERVER_NAME");
+            } else {
+                hostName = ip;
+            }
+            return;
+        }
+
         System.setProperty("java.net.preferIPv4Stack", "true");
         load();
 
@@ -47,10 +59,7 @@ public enum NetworkInterfaceManager {
 
         if (hostname == null) {
             hostname = "unknown";
-        } else if (hostname.contains(".sankuai.com") || hostname.contains(".office.mos")) {
-            hostname = hostname.substring(0, hostname.indexOf("."));
         }
-
         hostName = hostname;
     }
 

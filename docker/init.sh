@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo "resolving datasource placeholders...";
+cp /data/appdatas/cat/datasources_default.xml /data/appdatas/cat/datasources.xml
 sed -i "s/MYSQL_URL/${MYSQL_URL}/g" /data/appdatas/cat/datasources.xml;
 sed -i "s/MYSQL_PORT/${MYSQL_PORT}/g" /data/appdatas/cat/datasources.xml;
 sed -i "s/MYSQL_USERNAME/${MYSQL_USERNAME}/g" /data/appdatas/cat/datasources.xml;
@@ -15,6 +16,6 @@ echo "please check the content of: /data/appdatas/cat/client.xml";
 cat /data/appdatas/cat/client.xml;
 
 echo "please check catalina.sh configurations:"
-cat /usr/local/tomcat/bin/catalina.sh;
+#cat /usr/local/tomcat/bin/catalina.sh;
 
 /usr/local/tomcat/bin/catalina.sh run
